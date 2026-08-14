@@ -43,6 +43,26 @@ A mobile-first layout with breakpoints (900px, 640px): grids collapse, the check
 - **Loading states** — skeleton cards, spinner buttons, artificial latency.
 - **Transitions** — view fade-ups, card hover lifts, toast slide-ins, cart badge bump, modal scale-in.
 - **Consistent design system** — CSS variables, shared buttons/cards/chips/forms.
+- **High-trust visual identity** — Deep Navy structural elements, Professional Teal CTAs, Soft Gray content surfaces, and Slate Charcoal text; WCAG-AA compliant contrast with a travel-feel hero.
+
+---
+
+## 🎨 Visual identity — "High-Trust Booking"
+
+Booking involves payment and trip planning, so the UI is designed to **project stability and security** while staying clean and readable:
+
+| Token | Role | Colors |
+| --- | --- | --- |
+| `--teal-900` / `--teal-800` | **Deep Navy** — dominant structural tone: brand, hero, loyalty card, login backdrop, active nav | `#0F172A` / `#1E3A8A` |
+| `--teal-700` / `--teal-600` | **Professional Teal** — CTA buttons, links, key highlights, prices | `#0F766E` / `#0D9488` |
+| `--sand` / `--white` | **Soft Gray / Clean White** — content cards and background sections | `#F8FAFC` / `#FFFFFF` |
+| `--ink` / `--ink-soft` | **Slate Charcoal** — high-contrast body text & secondary text | `#334155` / `#64748B` |
+
+**Accessibility (WCAG AA)** — interactive surfaces (primary buttons, active nav, chips, step dots) and links use the deeper teal `#0F766E` (≈ 5.5:1 against white), so all normal-size text meets AA contrast. The brighter teal `#0D9488` is reserved for decorative borders, gradients and large elements.
+
+**Travel-feel hero** — the Explore hero layers a teal sunrise glow, soft ocean wake lines, a diagonal sun ray and a ✈ paper-plane watermark over the Deep Navy → Navy → Teal gradient. Category cover gradients (beach, mountain, city, cultural, adventure, wildlife) are all tinted to harmonize with the same palette.
+
+Everything is driven by CSS variables in `css/style.css` (`:root`), so the palette can be re-themed in one place.
 
 ---
 
@@ -80,8 +100,11 @@ js/app.js             Bootstrap + global header actions
 Since this is pure vanilla code there is **no install/build step**:
 
 ```
-# Option A — just open it
+# Option A — just open it (macOS/Linux)
 open index.html
+
+# Option A (Windows)
+start index.html
 
 # Option B — any static server
 npx serve .
