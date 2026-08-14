@@ -18,7 +18,7 @@
       '<div class="confirm-wrap">' +
         '<div class="success-ring">✓</div>' +
         '<h1>Booking confirmed!</h1>' +
-        '<p class="muted">Your trip is saved. Pack your bags ✈</p>' +
+        '<p class="muted">Your flights are booked. Pack your bags ✈</p>' +
         '<div class="confirm-card">' +
           '<div class="row"><span>Reference</span><span class="reference">' + booking.ref + '</span></div>' +
           '<div class="row"><span>Booked on</span><span>' + T.formatDate(booking.created.slice(0, 10)) + '</span></div>' +

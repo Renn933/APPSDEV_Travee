@@ -9,7 +9,7 @@
   var $$ = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
 
   function money(n) {
-    return '$' + Math.round(n).toLocaleString('en-US');
+    return '₱' + Math.round(n).toLocaleString('en-US');
   }
 
   function formatDate(iso) {
@@ -86,22 +86,24 @@
   /* Reusable destination card markup (shared by home & wishlist). */
   function destCard(d) {
     var cat = window.TraveeData.getCategory(d.cat);
+    var cover = d.photo
+      ? '<img class="cover-img" src="' + esc(d.photo) + '" alt="' + esc(d.name) + '" loading="lazy">'
+      : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + d.art + '</div>';
     return '' +
       '<article class="dcard" data-id="' + d.id + '">' +
         '<div class="dcard-cover">' +
-          '<div class="grad" style="background:' + cat.gradient + '"></div>' +
-          '<div class="art">' + d.art + '</div>' +
+          cover +
           '<span class="rating-tag">★ ' + d.rating.toFixed(1) + '</span>' +
           '<span class="cat-tag">' + cat.label + '</span>' +
           '<span class="price-tag">from ' + money(d.price) + '</span>' +
         '</div>' +
         '<div class="dcard-body">' +
           '<h3 class="dcard-title">' + esc(d.name) + '</h3>' +
-          '<div class="dcard-loc">' + esc(d.country) + '</div>' +
-          '<div class="dcard-meta"><span>⏱ ' + d.duration + ' days</span><span>✦ ' + esc(d.bestSeason) + '</span></div>' +
+          '<div class="dcard-loc">MNL → ' + esc(d.code || '—') + ' · ' + esc(d.country) + '</div>' +
+          '<div class="dcard-meta"><span>✈ ~' + d.duration + ' min</span><span>✦ ' + esc(d.airline || d.bestSeason) + '</span></div>' +
           '<div class="dcard-foot">' +
             '<span class="dcard-foot"></span>' +
-            '<a class="btn btn-primary btn-sm" href="#/destination/' + d.id + '">View trip</a>' +
+            '<a class="btn btn-primary btn-sm" href="#/destination/' + d.id + '">View flight</a>' +
           '</div>' +
         '</div>' +
       '</article>';

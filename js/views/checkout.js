@@ -11,7 +11,7 @@
   function render() {
     var items = S.state.cart;
     if (!items.length) {
-      return '<div class="container"><div class="empty"><div class="icon">🧳</div><h3>Nothing to check out</h3><p>Add a trip to your cart first.</p><a class="btn btn-primary" href="#/">Explore destinations</a></div></div>';
+      return '<div class="container"><div class="empty"><div class="icon">🧳</div><h3>Nothing to check out</h3><p>Add a flight to your cart first.</p><a class="btn btn-primary" href="#/">Find flights</a></div></div>';
     }
     return '' +
       '<div class="container">' +
@@ -50,7 +50,7 @@
       return '<div class="sum-row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' · ' + it.pkgLabel + '</span><span>' + T.money(it.unit * it.travelers) + '</span></div>';
     }).join('');
     return '<div class="checkout-card">' +
-      '<h3>Review your trip</h3>' + rows +
+      '<h3>Review your flights</h3>' + rows +
       (ck.discount ? '<div class="sum-row"><span>Discount</span><span class="green">−' + T.money(ck.discount) + '</span></div>' : '') +
       '<hr class="divider">' +
       '<div class="sum-row total"><span>Total</span><span>' + T.money(total) + '</span></div>' +

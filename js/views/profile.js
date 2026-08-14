@@ -18,7 +18,7 @@
 
     var bookingsHtml;
     if (!bookings.length) {
-      bookingsHtml = '<div class="empty"><div class="icon">🗓</div><h3>No bookings yet</h3><p>Your confirmed trips will appear here.</p><a class="btn btn-primary" href="#/">Find a trip</a></div>';
+      bookingsHtml = '<div class="empty"><div class="icon">🗓</div><h3>No bookings yet</h3><p>Your confirmed flights will appear here.</p><a class="btn btn-primary" href="#/">Find a flight</a></div>';
     } else {
       bookingsHtml = bookings.map(function (b) {
         var cat = 'confirmed';
@@ -80,7 +80,7 @@
     });
     if (T.$('#profile-logout')) {
       T.$('#profile-logout').addEventListener('click', function () {
-        T.confirmModal('Sign out?', 'Your saved trips stay in this browser.', 'Sign out', false).then(function (yes) {
+        T.confirmModal('Sign out?', 'Your saved flights stay in this browser.', 'Sign out', false).then(function (yes) {
           if (yes) {
             S.logout();
             T.toast('Signed out', 'info');

@@ -7,7 +7,7 @@
   var D = window.TraveeData, T = window.Travee, S = window.TraveeState;
 
   function render() {
-    var manual = D.DESTINATIONS.length + ' destinations across ' + Object.keys(D.CATEGORIES).length + ' categories';
+    var manual = D.DESTINATIONS.length + ' flight routes across the Philippines and beyond';
     return '' +
       '<div class="login-wrap">' +
         '<div class="login-card">' +
@@ -35,7 +35,7 @@
             '</div>' +
             '<button class="btn btn-primary" style="width:100%" type="submit" data-load>Continue</button>' +
           '</form>' +
-          '<p class="login-note">This is a demo of the interface, not real security.<br>Your trip data never leaves this browser. Explore ' + manual + '.</p>' +
+          '<p class="login-note">This is a demo of the interface, not real security.<br>Your booking data never leaves this browser. Explore ' + manual + '.</p>' +
         '</div>' +
       '</div>';
   }

@@ -10,7 +10,7 @@
     var logoutBtn = T.$('#logout-btn');
     if (logoutBtn) {
       logoutBtn.addEventListener('click', function () {
-        T.confirmModal('Sign out?', 'Your saved trips stay in this browser.', 'Sign out', false).then(function (yes) {
+        T.confirmModal('Sign out?', 'Your saved flights stay in this browser.', 'Sign out', false).then(function (yes) {
           if (yes) {
             window.TraveeState.logout();
             T.toast('Signed out', 'info');

@@ -1,6 +1,6 @@
-# ✈ Travee — Travel Booking System
+# ✈ Travee — Philippines & International Flight Booking
 
-Travee is a **travel booking system** built entirely with **vanilla HTML, CSS and JavaScript**. There is no server, no database, no framework and no build step — everything runs in the browser.
+Travee is a **flight booking app** — **domestic routes across the Philippines and international routes from Manila (MNL)** — built entirely with **vanilla HTML, CSS and JavaScript**. There is no server, no database, no framework and no build step — everything runs in the browser.
 
 > **Open the app:** just open `index.html` in any modern browser.
 > **Or serve it statically:** `npx serve .` (or any static file server) and visit the printed URL.
@@ -15,23 +15,23 @@ The app swaps entire views through a small hash router — each is a separate sc
 | Route | Screen |
 | --- | --- |
 | `#/login` | Sign in / create profile (demo, localStorage) |
-| `#/` | **Explore** — hero, search, filters, sortable grid |
-| `#/destination/:id` | **Trip detail** — package picker, travelers, date, add to cart |
+| `#/` | **Explore** — hero, Domestic/International toggle, search, filters, sortable grid |
+| `#/destination/:id` | **Flight detail** — class picker, travelers, departure date, add to cart |
 | `#/cart` | **Cart** — traveler steppers, promo codes, order summary |
 | `#/checkout` | **Checkout** — 2-step traveler info → review & confirm |
 | `#/confirmation/:id` | **Confirmation** — receipt + loyalty points |
-| `#/wishlist` | **Saved trips** — wishlist with quick actions |
+| `#/wishlist` | **Saved flights** — wishlist with quick actions |
 | `#/profile` | **Profile** — account, loyalty tier, booking history |
 
 ### Three+ features that hold and change state
-- **Cart** — add/remove trips, adjust travelers, clear, persist to localStorage.
+- **Cart** — add/remove flights, adjust travelers, clear, persist to localStorage.
 - **Loyalty points / score** — earn points per booking, tier up (Explorer → Legend), cancel deducts points.
-- **Saved list** — wishlist toggle from any destination.
-- **Filters** — search, category chips, sort, price cap.
+- **Saved list** — wishlist toggle from any route.
+- **Filters** — search, Domestic/International scope, region chips, sort, price cap.
 - **Booking** — multi-step checkout that creates persistent bookings (with booking history).
 
 ### Data-driven rendering
-All destinations, categories, packages, coupons and loyalty tiers live as **JavaScript data** in `js/data.js`. View markup is generated from that data — no copy-pasted HTML anywhere.
+All routes, regions, flight classes, coupons and loyalty tiers live as **JavaScript data** in `js/data.js` — every route carries a fare (₱), flight time, airline and a local photo from `images/`. View markup is generated from that data — no copy-pasted HTML anywhere.
 
 ### Responsive
 A mobile-first layout with breakpoints (900px, 640px): grids collapse, the checkout two-column collapses, and nav adapts. Tested on phone and laptop widths.
@@ -50,12 +50,12 @@ A mobile-first layout with breakpoints (900px, 640px): grids collapse, the check
 
 Everything is a **demo**:
 - **"Logging in"** is a fake screen backed by **localStorage** — the interface is real, the security is not. Any name/email/password works (password length ≥ 4).
-- **"Saving data"** means localStorage. All trips, carts, wishlists, bookings and points live in **one browser, one computer** — they won't follow you to another device.
-- There are **no real payments**, no real accounts, and no server/API — the only "database" is your browser's localStorage under the key `travee_state_v1`.
+- **"Saving data"** means localStorage. All bookings, carts, wishlists and points live in **one browser, one computer** — they won't follow you to another device.
+- There are **no real payments**, no real accounts, and no server/API — the only "database" is your browser's localStorage under the key `travee_state_v2`.
 
 ### Demo promo codes
 - `TRAVEE10` → 10% off
-- `EXPLORE50` → $50 off
+- `EXPLORE50` → ₱50 off
 
 ---
 
@@ -64,7 +64,8 @@ Everything is a **demo**:
 ```
 index.html            App shell (header, footer, mount point)
 css/style.css         Full design system (responsive)
-js/data.js            All content as JS data (destinations, categories, etc.)
+images/               Destination photos (local, Wikimedia Commons)
+js/data.js            All content as JS data (routes, regions, fares, airlines, photos)
 js/state.js           Single source of truth, persisted to localStorage
 js/utils.js           Money/date/validation, toast, confirm modal, card markup
 js/router.js          Hash router with auth guarding + chrome updates

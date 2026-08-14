@@ -5,7 +5,7 @@
    ============================================================ */
 (function () {
   'use strict';
-  var DATA_KEY = 'travee_state_v1';
+  var DATA_KEY = 'travee_state_v2';
 
   var state = {
     user: null,          // { name, email, avatar }
@@ -14,7 +14,7 @@
     bookings: [],        // [{ id, ref, items, total, pointsEarned, date, status, traveler }]
     points: 0,           // spendable balance
     lifetime: 0,         // all-time earned (drives loyalty tier)
-    filters: { search: '', category: 'all', sort: 'popular', maxPrice: 100000 }
+    filters: { search: '', category: 'all', sort: 'popular', maxPrice: 50000, scope: 'all' }
   };
 
   var listeners = [];
@@ -62,7 +62,8 @@
     var unit = window.TraveeData.packagePrice(d.price, pkg.mult);
     var item = {
       id: window.Travee.uid('cart'),
-      destId: destId, destName: d.name, destCountry: d.country, art: d.art,
+      destId: destId, destName: d.name, destCountry: d.country, art: d.art, photo: d.photo,
+      code: d.code, scope: d.scope,
       cat: d.cat, pkgId: pkg.id, pkgLabel: pkg.label,
       date: date, travelers: travelers || 1, unit: unit
     };
@@ -152,7 +153,7 @@
   /* ---------- filters ---------- */
   function setFilters(patch) { Object.assign(state.filters, patch); save(); }
   function resetFilters() {
-    state.filters = { search: '', category: 'all', sort: 'popular', maxPrice: 100000 };
+    state.filters = { search: '', category: 'all', sort: 'popular', maxPrice: 50000, scope: 'all' };
     save();
   }
   function filteredDestinations() {
@@ -160,8 +161,9 @@
     var list = window.TraveeData.DESTINATIONS.filter(function (d) {
       var okSearch = !f.search || (d.name + ' ' + d.country + ' ' + d.tagline).toLowerCase().indexOf(f.search.toLowerCase()) >= 0;
       var okCat = !f.category || f.category === 'all' || d.cat === f.category;
+      var okScope = !f.scope || f.scope === 'all' || d.scope === f.scope;
       var okPrice = d.price <= (f.maxPrice || 5000);
-      return okSearch && okCat && okPrice;
+      return okSearch && okCat && okScope && okPrice;
     });
     switch (f.sort) {
       case 'price-asc': list.sort(function (a, b) { return a.price - b.price; }); break;

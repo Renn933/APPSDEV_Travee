@@ -10,7 +10,7 @@
   function render(params) {
     var id = params && params[0];
     var dest = D.getDestination(id);
-    if (!dest) return '<div class="container"><div class="empty"><div class="icon">🗺</div><h3>Trip not found</h3><p>That destination may have moved on.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
+    if (!dest) return '<div class="container"><div class="empty"><div class="icon">🗺</div><h3>Flight not found</h3><p>That route may have moved on.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
 
     var cat = D.getCategory(dest.cat);
     var dates = D.upcomingDates(6);
@@ -19,36 +19,37 @@
 
     return '' +
       '<div class="container">' +
-        '<div class="breadcrumb"><a href="#/">Explore</a> <span>/</span> ' + T.esc(dest.country) + '</div>' +
+        '<div class="breadcrumb"><a href="#/">Explore</a> <span>/</span> MNL → ' + T.esc(dest.code || dest.name) + '</div>' +
 
         '<div class="detail-cover">' +
-          '<div class="grad" style="background:' + cat.gradient + ';position:absolute;inset:0"></div>' +
-          '<div class="art">' + dest.art + '</div>' +
-          '<span class="price-line">from ' + T.money(dest.price) + '/person</span>' +
+          (dest.photo
+            ? '<img class="cover-img" src="' + T.esc(dest.photo) + '" alt="' + T.esc(dest.name) + '">'
+            : '<div class="grad" style="background:' + cat.gradient + ';position:absolute;inset:0"></div><div class="art">' + dest.art + '</div>') +
+          '<span class="price-line">from ' + T.money(dest.price) + ' one-way</span>' +
           '<div class="ov">' +
             '<h1>' + T.esc(dest.name) + '</h1>' +
-            '<div class="meta"><span>📍 ' + T.esc(dest.country) + '</span><span>★ ' + dest.rating.toFixed(1) + '</span><span>⏱ ' + dest.duration + ' days</span></div>' +
+            '<div class="meta"><span>📍 MNL → ' + T.esc(dest.code || '—') + '</span><span>✈ ~' + dest.duration + ' min</span><span>★ ' + dest.rating.toFixed(1) + '</span><span>✦ ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
           '</div>' +
         '</div>' +
 
         '<div class="detail-layout">' +
           '<div class="detail-main">' +
             '<div class="tagline-card mb-2"><span aria-hidden="true">💬</span> ' + T.esc(dest.tagline) + '</div>' +
-            '<h2>About this trip</h2>' +
+            '<h2>About this destination</h2>' +
             '<p>' + T.esc(dest.description) + '</p>' +
             '<h2>Highlights</h2>' +
             '<ul class="highlights">' + dest.highlights.map(function (h) { return '<li><span class="tick">✓</span>' + T.esc(h) + '</li>'; }).join('') + '</ul>' +
-            '<div class="tagline-card"><span aria-hidden="true">🗓</span> Best season: <strong>' + T.esc(dest.bestSeason) + '</strong></div>' +
+            '<div class="tagline-card"><span aria-hidden="true">✈</span> Airline: <strong>' + T.esc(dest.airline || dest.bestSeason) + '</strong> · <span aria-hidden="true">🗓</span> Best season: <strong>' + T.esc(dest.bestSeason) + '</strong></div>' +
           '</div>' +
 
           '<div class="book-card">' +
-            '<h3>Plan your trip</h3>' +
-            '<p class="field" style="margin-bottom:.6rem"><label>Package</label></p>' +
+            '<h3>Book this flight</h3>' +
+            '<p class="field" style="margin-bottom:.6rem"><label>Class</label></p>' +
             '<div class="radio-row" id="pkg-row">' +
               D.PACKAGES.map(function (p) {
                 var price = D.packagePrice(dest.price, p.mult);
                 return '' +
-                  '<div class="radio-opt' + (p.id === 'comfort' ? ' sel' : '') + '" data-pkg="' + p.id + '" data-mult="' + p.mult + '" data-price="' + price + '" role="radio" aria-checked="' + (p.id === 'comfort' ? 'true' : 'false') + '" tabindex="0">' +
+                  '<div class="radio-opt' + (p.id === 'economy' ? ' sel' : '') + '" data-pkg="' + p.id + '" data-mult="' + p.mult + '" data-price="' + price + '" role="radio" aria-checked="' + (p.id === 'economy' ? 'true' : 'false') + '" tabindex="0">' +
                     '<div class="label">' + p.label + '</div>' +
                     '<div class="sub">' + T.esc(p.sub) + '</div>' +
                     '<div class="price">' + T.money(price) + '</div>' +
@@ -72,7 +73,7 @@
               '</div>' +
             '</div>' +
             '<hr class="divider">' +
-            '<div class="sum-row total"><span>Total</span><span id="detail-total">' + T.money(D.packagePrice(dest.price, 1.45)) + '</span></div>' +
+            '<div class="sum-row total"><span>Total</span><span id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
             '<p class="small muted" id="detail-perperson"></p>' +
             '<button class="btn btn-primary" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
             '<button class="btn btn-ghost" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
@@ -82,7 +83,7 @@
           '</div>' +
         '</div>' +
         (related.length ? (
-          '<h2 style="margin-top:3rem">More ' + cat.label.toLowerCase() + ' escapes</h2>' +
+          '<h2 style="margin-top:3rem">More flights to ' + cat.label + '</h2>' +
           '<div class="grid">' + related.map(T.destCard).join('') + '</div>'
         ) : '') +
       '</div>';
@@ -91,7 +92,7 @@
   function mount(params) {
     var dest = D.getDestination(params && params[0]);
     if (!dest) return;
-    var current = { pkgId: 'comfort', travelers: 1 };
+    var current = { pkgId: 'economy', travelers: 1 };
     function unitPrice() {
       for (var i = 0; i < D.PACKAGES.length; i++) if (D.PACKAGES[i].id === current.pkgId) return D.packagePrice(dest.price, D.PACKAGES[i].mult);
       return dest.price;
@@ -120,7 +121,7 @@
         S.addToCart(dest.id, current.pkgId, T.$('#date-select').value, current.travelers);
         addBtn.disabled = false; addBtn.innerHTML = old;
         window.bumpCartBadge && window.bumpCartBadge();
-        T.toast(dest.name + ' added to your cart', 'success');
+        T.toast('Flight to ' + dest.name + ' added to your cart', 'success');
       });
     });
     T.$('#buy-now-btn').addEventListener('click', function () {

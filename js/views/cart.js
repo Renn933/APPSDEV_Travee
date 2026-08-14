@@ -16,15 +16,15 @@
           '<div class="empty">' +
             '<div class="icon">🧳</div>' +
             '<h3>Your cart is empty</h3>' +
-            '<p>Looks like you haven’t picked any trips yet.</p>' +
-            '<a class="btn btn-primary" href="#/">Explore destinations</a>' +
+            '<p>Looks like you haven’t picked any flights yet.</p>' +
+            '<a class="btn btn-primary" href="#/">Find flights</a>' +
           '</div>' +
         '</div>';
     }
     return '' +
       '<div class="container">' +
         '<h1 class="screen-title">Your cart</h1>' +
-        '<p class="screen-sub">' + info.count + (info.count === 1 ? ' trip' : ' trips') + ' ready to book</p>' +
+        '<p class="screen-sub">' + info.count + (info.count === 1 ? ' flight' : ' flights') + ' ready to book</p>' +
         '<div class="cart-grid">' +
           '<div id="cart-items">' + items.map(cartItemHtml).join('') + '</div>' +
           '<aside class="cart-summary">' +
@@ -51,12 +51,15 @@
   function cartItemHtml(it) {
     var cat = D.getCategory(it.cat);
     var line = it.unit * it.travelers;
+    var thumb = it.photo
+      ? 'background-image:url(\'' + it.photo + '\');background-size:cover;background-position:center'
+      : 'background:' + cat.gradient;
     return '' +
       '<div class="cart-item" data-id="' + it.id + '">' +
-        '<a href="#/destination/' + it.destId + '"><div class="cart-thumb" style="background:' + cat.gradient + '">' + it.art + '</div></a>' +
+        '<a href="#/destination/' + it.destId + '"><div class="cart-thumb" style="' + thumb + '">' + (it.photo ? '' : it.art) + '</div></a>' +
         '<div class="cart-item-info">' +
           '<h4><a href="#/destination/' + it.destId + '">' + T.esc(it.destName) + '</a></h4>' +
-          '<div class="sub">' + it.pkgLabel + ' package · Departing ' + T.formatDate(it.date) + '</div>' +
+          '<div class="sub">' + it.pkgLabel + ' class · Departing ' + T.formatDate(it.date) + '</div>' +
           '<div class="cart-actions">' +
             '<div class="stepper">' +
               '<button type="button" class="trv-chg" data-delta="-1" aria-label="Fewer travelers">−</button>' +
@@ -112,7 +115,7 @@
       T.$$('.remove-btn').forEach(function (b) {
         b.addEventListener('click', function () {
           var row = b.closest('.cart-item');
-          T.confirmModal('Remove from cart?', 'This trip will be removed from your cart.', 'Remove', true).then(function (yes) {
+          T.confirmModal('Remove from cart?', 'This flight will be removed from your cart.', 'Remove', true).then(function (yes) {
             if (yes) { S.removeFromCart(row.getAttribute('data-id')); rerender(); T.toast('Removed from cart', 'info'); }
           });
         });
@@ -131,7 +134,7 @@
     });
     T.$('#checkout-btn').addEventListener('click', function () { window.location.hash = '#/checkout'; });
     T.$('#clear-cart-btn').addEventListener('click', function () {
-      T.confirmModal('Clear your cart?', 'All ' + S.state.cart.length + ' trips will be removed.', 'Clear cart', true).then(function (yes) {
+      T.confirmModal('Clear your cart?', 'All ' + S.state.cart.length + ' flights will be removed.', 'Clear cart', true).then(function (yes) {
         if (yes) { S.clearCart(); T.toast('Cart cleared', 'info'); }
       });
     });
