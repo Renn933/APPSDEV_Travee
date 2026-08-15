@@ -11,7 +11,7 @@
     return '' +
       '<div class="login-wrap">' +
         '<div class="login-card">' +
-          '<div class="login-brand"><span class="brand-mark" aria-hidden="true">✈</span> <span>Travee</span></div>' +
+          '<div class="login-brand"><span class="brand-mark" aria-hidden="true">✈</span> <span class="brand-name">TRAVEE</span></div>' +
           '<div class="center"><span class="demo-shield">🔒 Demo login — saved in your browser</span></div>' +
           '<div class="tabs">' +
             '<button class="tab active" data-tab="signin" type="button">Sign in</button>' +
