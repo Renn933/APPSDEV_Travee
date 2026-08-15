@@ -43,24 +43,24 @@ A mobile-first layout with breakpoints (900px, 640px): grids collapse, the check
 - **Loading states** — skeleton cards, spinner buttons, artificial latency.
 - **Transitions** — view fade-ups, card hover lifts, toast slide-ins, cart badge bump, modal scale-in.
 - **Consistent design system** — CSS variables, shared buttons/cards/chips/forms.
-- **High-trust visual identity** — Deep Navy structural elements, Professional Teal CTAs, Soft Gray content surfaces, and Slate Charcoal text; WCAG-AA compliant contrast with a travel-feel hero.
+- **Trust, Calm & Vibrance visual identity** — Deep Navy structural elements, Vibrant Blue CTAs, Ice Blue content surfaces, and Slate text; WCAG-AA compliant contrast with a travel-feel hero.
 
 ---
 
-## 🎨 Visual identity — "High-Trust Booking"
+## 🎨 Visual identity — "Trust, Calm & Vibrance"
 
-Booking involves payment and trip planning, so the UI is designed to **project stability and security** while staying clean and readable:
+Booking involves payment and trip planning, so the UI is designed to **project stability, trust and calm** while staying vibrant and readable. The blue palette evokes the sky and ocean — the very atmosphere of travel:
 
 | Token | Role | Colors |
 | --- | --- | --- |
-| `--teal-900` / `--teal-800` | **Deep Navy** — dominant structural tone: brand, hero, loyalty card, login backdrop, active nav | `#0F172A` / `#1E3A8A` |
-| `--teal-700` / `--teal-600` | **Professional Teal** — CTA buttons, links, key highlights, prices | `#0F766E` / `#0D9488` |
-| `--sand` / `--white` | **Soft Gray / Clean White** — content cards and background sections | `#F8FAFC` / `#FFFFFF` |
-| `--ink` / `--ink-soft` | **Slate Charcoal** — high-contrast body text & secondary text | `#334155` / `#64748B` |
+| `--blue-900` / `--blue-800` | **Deep Navy** — dominant structural tone: brand, hero, loyalty card, login backdrop, active nav | `#0C1E3F` / `#1E3A8A` |
+| `--blue-700` / `--blue-600` | **Vibrant Blue** — CTA buttons, links, key highlights, prices | `#1D4ED8` / `#2563EB` |
+| `--ice` / `--white` | **Ice Blue / Clean White** — content cards and background sections | `#F0F9FF` / `#FFFFFF` |
+| `--ink` / `--ink-soft` | **Slate** — high-contrast body text & secondary text | `#1E293B` / `#64748B` |
 
-**Accessibility (WCAG AA)** — interactive surfaces (primary buttons, active nav, chips, step dots) and links use the deeper teal `#0F766E` (≈ 5.5:1 against white), so all normal-size text meets AA contrast. The brighter teal `#0D9488` is reserved for decorative borders, gradients and large elements.
+**Accessibility (WCAG AA)** — interactive surfaces (primary buttons, active nav, chips, step dots) and links use the deeper blue `#1D4ED8` (≈ 5.5:1 against white), so all normal-size text meets AA contrast. The brighter blue `#2563EB` is reserved for decorative borders, gradients and large elements.
 
-**Travel-feel hero** — the Explore hero layers a teal sunrise glow, soft ocean wake lines, a diagonal sun ray and a ✈ paper-plane watermark over the Deep Navy → Navy → Teal gradient. Category cover gradients (beach, mountain, city, cultural, adventure, wildlife) are all tinted to harmonize with the same palette.
+**Travel-feel hero** — the Explore hero layers a blue sky glow, soft ocean wake lines, a diagonal sun ray and a ✈ paper-plane watermark over the Deep Navy → Navy → Sky Blue gradient. Category cover gradients (beach, mountain, city, cultural, adventure, wildlife) are all tinted to harmonize with the same blue palette.
 
 Everything is driven by CSS variables in `css/style.css` (`:root`), so the palette can be re-themed in one place.
 
@@ -111,3 +111,34 @@ npx serve .
 ```
 
 `npm install` is **not required** (and there are no node_modules to commit).
+
+---
+
+## 📝 Changelog
+
+### [2026-08-15] — Blue "Trust, Calm & Vibrance" palette by [@Renn933](https://github.com/Renn933)
+
+Re-themed the entire design system from the original teal/navy palette to a **blue palette** that conveys **trust, calm, and vibrance** — perfectly matching the atmosphere of travel and the objective of a flight booking platform.
+
+**What changed:**
+- **CSS variables** in `css/style.css` (`:root`) — replaced all teal/coral tokens with a cohesive blue scale:
+  - `--teal-900` → `--blue-900` (`#0C1E3F` — Deep Navy)
+  - `--teal-800` → `--blue-800` (`#1E3A8A` — Navy)
+  - `--teal-700` → `--blue-700` (`#1D4ED8` — Vibrant Blue, primary CTA)
+  - `--teal-600` → `--blue-600` (`#2563EB` — Bright Blue)
+  - `--teal-500` → `--blue-500` (`#3B82F6` — Sky Blue)
+  - `--teal-100` → `--blue-100` (`#DBEAFE` — Light Blue)
+  - `--teal-50` → `--blue-50` (`#EFF6FF` — Pale Blue)
+  - `--coral` / `--coral-dark` → `--blue-700` / `--blue-800`
+  - `--sand` → `--ice` (`#F0F9FF` — Ice Blue background)
+  - Added `--sky` (`#0EA5E9`) and `--sky-light` (`#7DD3FC`) for vibrant accents
+- **Gradients** — all category gradients (beach, mountain, city, cultural, adventure, wildlife) and the hero gradient re-tinted to blue tones
+- **Shadows** — updated shadow color from teal-tinted to navy-tinted (`rgba(12,30,63,…)`)
+- **Hero** — blue sky glow replaces the teal sunrise glow
+- **Modal overlay** — updated to navy-tinted backdrop
+- **Loyalty progress bar** — now uses blue → sky-light gradient
+- **All component styles** — buttons, nav, chips, cards, tags, badges, steppers, toasts, tabs, and more updated to the new blue system
+
+**Files modified:**
+- `css/style.css` — full palette re-theme
+- `README.md` — updated visual identity documentation + this changelog
