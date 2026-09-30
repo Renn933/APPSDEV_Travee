@@ -77,62 +77,70 @@ js/app.js             Bootstrap + global header actions
 
 ---
 
-## 4. UI Color System — "High-Trust Booking"
+## 4. UI Color System — "Coastal High-Trust"
 
-The UI was designed to **project stability and security** (critical for payment/booking flows) while remaining clean and readable. The entire palette is controlled by CSS variables in `css/style.css` → `:root`, so the whole site can be re-themed from one place.
+The UI **projects stability and security** (critical for payment/booking flows) while staying clean and readable. It follows the **60 / 30 / 10 rule** so neutrals dominate, ocean blue frames the structure, and a single accent marks the calls-to-action. The entire palette is controlled by CSS variables in `css/style.css` → `:root`, so the whole site can be re-themed from one place.
+
+### 60 / 30 / 10 allocation
+| Band | Share | Used for |
+| --- | --- | --- |
+| **Dominant neutrals** | ~60% | Page background (Soft Sand/Cream), cards, forms, modals, panels, footer (Clean White) |
+| **Secondary tone** | ~30% | Header, hero + category gradients, loyalty card, login backdrop, brand mark, links, active nav, prices, step dots (Deep Ocean Blue) |
+| **Accent (CTAs only)** | ~10% | Primary calls-to-action — "Add to cart", "Book now", "Checkout", "Continue", "Confirm & book" — plus the cart count badge (Bright Aqua) |
 
 ### Color roles & tokens
-| Token | Role | Color |
-| --- | --- | --- |
-| `--teal-900` | **Deep Navy** — deepest structural tone (brand, hero, shadows) | `#0F172A` |
-| `--teal-800` | **Deep Navy blue** — secondary structural tone (login card, prices) | `#1E3A8A` |
-| `--teal-700` | **Professional Teal (deep)** — CTA surfaces, links, active states | `#0F766E` |
-| `--teal-600` | **Professional Teal** — decorative borders, gradients, large elements | `#0D9488` |
-| `--teal-500` | **Teal (bright)** — focus borders, hover accents, loyalty fill | `#14B8A6` |
-| `--teal-100` / `--teal-50` | **Teal tints** — soft backgrounds, pills, selected states | `#CCFBF1` / `#F0FDFA` |
-| `--sand` | **Soft Gray** — page background | `#F8FAFC` |
-| `--white` | **Clean White** — cards, forms, modals | `#FFFFFF` |
-| `--ink` | **Slate Charcoal** — body text | `#334155` |
-| `--ink-soft` | **Slate Gray** — secondary text / muted | `#64748B` |
-| `--line` | **Border gray** | `#E2E8F0` |
-| `--danger` | **Semantic error/red** | `#DC2626` |
-| `--success` | **Semantic success/green** | `#16A34A` |
-| `--coral` / `--gold` | **Teal accent (was warm gold in earlier iteration)** | `#0F766E` `#115E59` |
+| Token | Band | Role | Color |
+| --- | --- | --- | --- |
+| `--sand` | 60% | **Soft Sand / Cream** — page background | `#F2E9D8` |
+| `--white` | 60% | **Clean White** — cards, forms, modals | `#FFFFFF` |
+| `--teal-900` | 30% | **Deep Ocean Blue (deepest)** — brand, hero, shadows | `#06343A` |
+| `--teal-800` | 30% | **Deep Ocean Blue (deep)** — secondary structural tone (login card, prices) | `#08454C` |
+| `--teal-700` | 30% | **Deep Ocean Blue** — secondary actions, links, active states | `#0B5D67` |
+| `--teal-600` | 30% | **Deep Ocean Blue (bright)** — borders, gradients, focus outlines | `#0E7B87` |
+| `--teal-100` / `--teal-50` | 30% | **Aqua tints** — soft backgrounds, pills, selected states | `#D7ECE6` / `#EEF7F4` |
+| `--accent` / `--accent-dark` | **10%** | **Bright Aqua accent (CTA only)** — dark ocean text sits on the aqua fill | `#8FD6C8` / `#5CC3AE` |
+| `--accent-soft` | 10% | **Accent tint** — subtle accent-tinted backgrounds | `#E2F4EF` |
+| `--ink` | — | **Deep Slate-Teal** — body text | `#2B3A37` |
+| `--ink-soft` | — | **Muted Slate-Teal** — secondary text / muted | `#566661` |
+| `--line` | — | **Warm sand border** | `#E7DDCA` |
+| `--danger` | — | **Semantic error/red** | `#DC2626` |
+| `--success` | — | **Semantic success/green** | `#16A34A` |
 
 ### WCAG AA contrast strategy
-- **CTA surfaces** (primary/accent buttons, active nav, chips, step dots) use **`#0F766E`** → **~5.5:1** against white — passes AA for normal-size text.
-- **Links** use `#0F766E` for the same reason.
-- **`#0D9488` (3.75:1)** is used only for decorative borders, gradients, radio selection outlines, and large graphic elements — not normal-size text.
-- **Body text** is Slate Charcoal `#334155` on white → **~9.8:1**.
+- **Secondary actions / links** use ocean `#0B5D67` → **~7.6:1** against white — passes AA (and AAA) for normal-size text.
+- **CTA buttons** pair the light aqua fill `#8FD6C8` with **dark ocean text `#06343A`** → **~8:1** (aqua itself is only ~1.7:1 against white, so it is never used behind white text) plus a `#0E7B87` border for edge definition.
+- **`#0E7B87` (~5.0:1)** is used for decorative borders, gradients, focus outlines and large graphic elements.
+- **Body text** is Deep Slate-Teal `#2B3A37` on white → **~11.9:1** (and ~9.9:1 on the sand background).
 
 ### Brand gradients
 | Gradient | Used for | Colors |
 | --- | --- | --- |
-| `--grad-hero` | Hero, login backdrop, loyalty card, avatar, brand mark | `#0F172A → #1E3A8A → #0D9488` |
-| `--grad-beach` | Beach category covers | `#14B8A6 → #0F766E` |
-| `--grad-mountain` | Mountain covers | `#0F766E → #1E3A8A` |
-| `--grad-city` | City covers | `#1E3A8A → #0F172A` |
-| `--grad-cultural` | Cultural covers | `#0D9488 → #0F172A` |
-| `--grad-adventure` | Adventure covers | `#16A34A → #0F766E` |
-| `--grad-wildlife` | Wildlife covers | `#0F766E → #0F172A` |
+| `--grad-hero` | Hero, login backdrop, loyalty card, avatar, brand mark | `#06343A → #0B5D67 → #0E7B87` |
+| `--grad-beach` | Beach category covers | `#8FD6C8 → #0B5D67` |
+| `--grad-mountain` | Mountain covers | `#0E7B87 → #06343A` |
+| `--grad-city` | City covers | `#0B5D67 → #06343A` |
+| `--grad-cultural` | Cultural covers | `#08454C → #0E7B87` |
+| `--grad-adventure` | Adventure covers | `#2FAE9E → #0B5D67` |
+| `--grad-wildlife` | Wildlife covers | `#06343A → #08454C` |
 
 ---
 
 ## 5. Travel-Feel Hero
 
-The Explore page hero layers a travel atmosphere over the Deep Navy → Navy → Teal gradient:
+The Explore page hero layers a travel atmosphere over the Deep Ocean → Ocean gradient:
 
-1. **Teal sunrise glow** — radial teal light (`#14B8A6`) in the top-right, like sun over the ocean
-2. **Ocean wake lines** — three soft rippling lines across the lower third (foam + deep navy water shadow)
+1. **Aqua sunrise glow** — radial aqua light (`#8FD6C8`) in the top-right, like sun over the ocean
+2. **Ocean wake lines** — three soft rippling lines across the lower third (foam + deep ocean water shadow)
 3. **Diagonal sun ray** — a translucent light streak sweeping across the banner
-4. **✈ Paper-plane watermark** — large rotated plane icon top-right with a navy drop shadow
+4. **✈ Paper-plane watermark** — large rotated plane icon top-right with a deep-ocean drop shadow
 
 ---
 
 ## 6. Design principles
 
-- **Trust first** — booking/payment flows use deep, stable navy + teal; no alarming colors
-- **Calm surfaces** — soft-gray backgrounds with clean white cards reduce visual noise
+- **Trust first** — booking/payment flows use deep, stable ocean blue; no alarming colors
+- **60/30/10 discipline** — neutrals dominate (60%), ocean blue frames the structure (30%), bright aqua is reserved for CTAs (10%)
+- **Calm surfaces** — soft sand/cream backgrounds with clean white cards reduce visual noise
 - **Accessible** — all normal-size text meets WCAG AA (see contrast strategy above)
 - **One source of truth** — every color, radius, shadow and font is a CSS variable; re-theming is a one-line change
 - **Consistent components** — shared buttons, cards, chips, forms, toasts, modals across all 8 screens

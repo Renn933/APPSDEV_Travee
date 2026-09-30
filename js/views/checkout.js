@@ -37,7 +37,7 @@
           '<div class="field"><label for="cf-phone">Phone</label><input id="cf-phone" type="tel" placeholder="+1 555 000 1234" value="' + T.esc(ck.form.phone) + '"><div class="err" data-for="cf-phone">Enter a phone number (7+ digits).</div></div>' +
           '<div class="field"><label for="cf-req">Special requests <span class="muted small">(optional)</span></label><input id="cf-req" type="text" placeholder="e.g. vegetarian meals" value="' + T.esc(ck.form.requests) + '"></div>' +
         '</div>' +
-        '<button class="btn btn-primary" id="cf-next" type="button">Continue to review →</button>' +
+        '<button class="btn btn-accent" id="cf-next" type="button">Continue to review →</button>' +
       '</div>';
   }
 

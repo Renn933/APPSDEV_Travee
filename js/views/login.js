@@ -33,7 +33,7 @@
               '<input id="lf-pass" name="pass" type="password" placeholder="••••••" autocomplete="current-password">' +
               '<div class="err" data-for="pass">Use at least 4 characters.</div>' +
             '</div>' +
-            '<button class="btn btn-primary" style="width:100%" type="submit" data-load>Continue</button>' +
+            '<button class="btn btn-accent" style="width:100%" type="submit" data-load>Continue</button>' +
           '</form>' +
           '<p class="login-note">This is a demo of the interface, not real security.<br>Your booking data never leaves this browser. Explore ' + manual + '.</p>' +
         '</div>' +

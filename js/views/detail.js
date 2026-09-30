@@ -75,7 +75,7 @@
             '<hr class="divider">' +
             '<div class="sum-row total"><span>Total</span><span id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
             '<p class="small muted" id="detail-perperson"></p>' +
-            '<button class="btn btn-primary" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
+            '<button class="btn btn-accent" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
             '<button class="btn btn-ghost" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
               (wish ? '♥ Saved to wishlist' : '♡ Save to wishlist') +
             '</button>' +

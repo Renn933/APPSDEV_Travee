@@ -15,7 +15,7 @@
           '<p>Domestic and international routes from Manila — compare fares, pick a class and book your seat in minutes.</p>' +
           '<div class="searchbar">' +
             '<input id="search-input" type="text" placeholder="Search cities, countries…" value="' + T.esc(f.search) + '" aria-label="Search flights">' +
-            '<button class="btn btn-accent" id="search-clear" type="button" title="Clear search">✕</button>' +
+            '<button class="btn btn-ghost btn-sm" id="search-clear" type="button" title="Clear search">✕</button>' +
           '</div>' +
         '</section>' +
 
