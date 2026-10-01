@@ -133,6 +133,30 @@
     EXPLORE50: { type: 'flat',    value: 50,   label: '$50 off' }
   };
 
+  /* Phone countries offered at checkout — Philippines first (the app's default). */
+  var COUNTRIES = [
+    { iso: 'PH', name: 'Philippines',    dial: '+63',  flag: '🇵🇭', sample: '917 123 4567' },
+    { iso: 'US', name: 'United States',  dial: '+1',   flag: '🇺🇸', sample: '202 555 0123' },
+    { iso: 'SG', name: 'Singapore',      dial: '+65',  flag: '🇸🇬', sample: '8123 4567' },
+    { iso: 'JP', name: 'Japan',          dial: '+81',  flag: '🇯🇵', sample: '90 1234 5678' },
+    { iso: 'KR', name: 'South Korea',    dial: '+82',  flag: '🇰🇷', sample: '10 1234 5678' },
+    { iso: 'CN', name: 'China',          dial: '+86',  flag: '🇨🇳', sample: '131 2345 6789' },
+    { iso: 'AU', name: 'Australia',      dial: '+61',  flag: '🇦🇺', sample: '412 345 678' },
+    { iso: 'NZ', name: 'New Zealand',    dial: '+64',  flag: '🇳🇿', sample: '21 123 4567' },
+    { iso: 'AE', name: 'UAE',            dial: '+971', flag: '🇦🇪', sample: '50 123 4567' },
+    { iso: 'GB', name: 'United Kingdom', dial: '+44',  flag: '🇬🇧', sample: '7700 900123' },
+    { iso: 'CA', name: 'Canada',         dial: '+1',   flag: '🇨🇦', sample: '204 234 5678' },
+    { iso: 'DE', name: 'Germany',        dial: '+49',  flag: '🇩🇪', sample: '151 23456789' },
+    { iso: 'FR', name: 'France',         dial: '+33',  flag: '🇫🇷', sample: '6 12 34 56 78' },
+    { iso: 'IT', name: 'Italy',          dial: '+39',  flag: '🇮🇹', sample: '312 3456789' },
+    { iso: 'ES', name: 'Spain',          dial: '+34',  flag: '🇪🇸', sample: '612 345 678' },
+    { iso: 'NL', name: 'Netherlands',    dial: '+31',  flag: '🇳🇱', sample: '6 12345678' },
+    { iso: 'SA', name: 'Saudi Arabia',   dial: '+966', flag: '🇸🇦', sample: '50 123 4567' },
+    { iso: 'QA', name: 'Qatar',          dial: '+974', flag: '🇶🇦', sample: '3312 3456' },
+    { iso: 'IN', name: 'India',          dial: '+91',  flag: '🇮🇳', sample: '98765 43210' },
+    { iso: 'TH', name: 'Thailand',       dial: '+66',  flag: '🇹🇭', sample: '81 234 5678' }
+  ];
+
   function getCategory(cat) { return CATEGORIES[cat] || { label: cat, gradient: 'var(--grad-city)', icon: '🌍' }; }
   function getDestination(id) {
     for (var i = 0; i < DESTINATIONS.length; i++) if (DESTINATIONS[i].id === id) return DESTINATIONS[i];
@@ -159,6 +183,7 @@
     PACKAGES: PACKAGES,
     TIERS: TIERS,
     COUPONS: COUPONS,
+    COUNTRIES: COUNTRIES,
     getCategory: getCategory,
     getDestination: getDestination,
     sameCategoryDestinations: sameCategoryDestinations,

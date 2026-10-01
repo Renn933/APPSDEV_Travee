@@ -90,6 +90,7 @@ input,select,textarea { font:inherit; color:inherit; }
 
 /* Footer */
 .site-footer { border-top:1px solid var(--line); margin-top:4rem; padding:2rem 0; color:var(--ink-soft); font-size:.88rem; background:var(--white); }
+.site-footer p:last-child { margin-bottom:0; }
 
 /* Views */
 .view { min-height:calc(100vh - var(--header-h)); padding:2rem 0 3rem; }
@@ -217,6 +218,10 @@ input,select,textarea { font:inherit; color:inherit; }
 .step.done + .step::before { background:var(--success); }
 .checkout-card { background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:2rem; max-width:640px; box-shadow:var(--shadow-sm); }
 .checkout-card-2col { display:grid; grid-template-columns:1fr 1fr; gap:0 1rem; }
+.field-span { grid-column:1 / -1; }
+.phone-row { display:flex; flex-wrap:wrap; gap:.5rem; }
+.phone-row select { flex:0 0 auto; width:auto; min-width:150px; }
+.phone-row input { flex:1 1 160px; min-width:0; }
 
 /* Login */
 .login-wrap { min-height:100vh; display:grid; place-items:center; padding:2rem 1rem; background:var(--grad-hero); }

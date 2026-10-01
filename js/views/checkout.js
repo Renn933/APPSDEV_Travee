@@ -6,7 +6,7 @@
   'use strict';
   var D = window.TraveeData, T = window.Travee, S = window.TraveeState;
 
-  var ck = { step: 1, form: { fullName: '', email: '', phone: '', requests: '' }, discount: 0 };
+  var ck = { step: 1, form: { fullName: '', email: '', phone: '', phoneDial: '+63', phoneCountry: 'PH', phoneFull: '', requests: '' }, discount: 0 };
 
   function render() {
     var items = S.state.cart;
@@ -24,7 +24,30 @@
       '</div>';
   }
 
+  /* ---------- phone country helpers ---------- */
+  function countryByIso(iso) {
+    for (var i = 0; i < D.COUNTRIES.length; i++) if (D.COUNTRIES[i].iso === iso) return D.COUNTRIES[i];
+    return D.COUNTRIES[0];
+  }
+  function countryOptions(selIso) {
+    return D.COUNTRIES.map(function (c) {
+      return '<option value="' + c.iso + '"' + (c.iso === selIso ? ' selected' : '') +
+        ' data-dial="' + c.dial + '" data-sample="' + T.esc(c.sample) + '">' +
+        T.esc(c.flag) + ' ' + T.esc(c.name) + ' (' + c.dial + ')</option>';
+    }).join('');
+  }
+  /* National digits only: drop formatting, a pasted dial-code prefix and leading zeros. */
+  function phoneDigits(raw, dial) {
+    var digits = String(raw || '').replace(/\D/g, '');
+    var dialDigits = String(dial || '').replace(/\D/g, '');
+    if (dialDigits && digits.indexOf(dialDigits) === 0 && digits.length - dialDigits.length >= 7) {
+      digits = digits.slice(dialDigits.length);
+    }
+    return digits.replace(/^0+/, '');
+  }
+
   function step1() {
+    var country = countryByIso(ck.form.phoneCountry);
     return '' +
       '<div class="checkout-card">' +
         '<h3>Traveler details</h3>' +
@@ -34,8 +57,15 @@
           '<div class="field"><label for="cf-email">Email</label><input id="cf-email" type="email" placeholder="jane@example.com" value="' + T.esc(ck.form.email) + '"><div class="err" data-for="cf-email">Enter a valid email.</div></div>' +
         '</div>' +
         '<div class="checkout-card-2col">' +
-          '<div class="field"><label for="cf-phone">Phone</label><input id="cf-phone" type="tel" placeholder="+1 555 000 1234" value="' + T.esc(ck.form.phone) + '"><div class="err" data-for="cf-phone">Enter a phone number (7+ digits).</div></div>' +
-          '<div class="field"><label for="cf-req">Special requests <span class="muted small">(optional)</span></label><input id="cf-req" type="text" placeholder="e.g. vegetarian meals" value="' + T.esc(ck.form.requests) + '"></div>' +
+          '<div class="field field-span">' +
+            '<label for="cf-phone">Phone number</label>' +
+            '<div class="phone-row">' +
+              '<select id="cf-country" class="field-select" aria-label="Country dial code">' + countryOptions(ck.form.phoneCountry) + '</select>' +
+              '<input id="cf-phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="' + T.esc(country.sample) + '" value="' + T.esc(ck.form.phone) + '">' +
+            '</div>' +
+            '<div class="err" data-for="cf-phone">Enter a valid phone number (7–15 digits).</div>' +
+          '</div>' +
+          '<div class="field field-span"><label for="cf-req">Special requests <span class="muted small">(optional)</span></label><input id="cf-req" type="text" placeholder="e.g. vegetarian meals" value="' + T.esc(ck.form.requests) + '"></div>' +
         '</div>' +
         '<button class="btn btn-accent" id="cf-next" type="button">Continue to review →</button>' +
       '</div>';
@@ -54,7 +84,7 @@
       (ck.discount ? '<div class="sum-row"><span>Discount</span><span class="green num-tabular">−' + T.money(ck.discount) + '</span></div>' : '') +
       '<hr class="divider">' +
       '<div class="sum-row total"><span>Total</span><span class="num-tabular">' + T.money(total) + '</span></div>' +
-      '<p class="small muted mt-1">Traveler: ' + T.esc(ck.form.fullName) + ' · ' + T.esc(ck.form.email) + '</p>' +
+      '<p class="small muted mt-1">Traveler: ' + T.esc(ck.form.fullName) + ' · ' + T.esc(ck.form.email) + (ck.form.phoneFull ? ' · ' + T.esc(ck.form.phoneFull) : '') + '</p>' +
       '<div class="field mt-2"><label><input type="checkbox" id="cf-terms"> I understand this is a demo booking with no real payment or itinerary.</label></div>' +
       '<div class="flex mt-2">' +
         '<button class="btn btn-ghost" id="cf-back" type="button">← Back</button>' +
@@ -67,16 +97,35 @@
     if (!T.$('#checkout-body')) return;
 
     if (ck.step === 1 && T.$('#cf-next')) {
+      // Country picker: keep the dial code and example number in sync with the selection.
+      var countrySel = T.$('#cf-country');
+      if (countrySel) {
+        countrySel.addEventListener('change', function () {
+          var c = countryByIso(countrySel.value);
+          ck.form.phoneCountry = c.iso;
+          ck.form.phoneDial = c.dial;
+          var input = T.$('#cf-phone');
+          input.placeholder = c.sample;
+          input.focus();
+        });
+      }
       T.$('#cf-next').addEventListener('click', function () {
         var name = T.$('#cf-name').value.trim();
         var email = T.$('#cf-email').value.trim();
         var phone = T.$('#cf-phone').value.trim();
+        var country = countryByIso(T.$('#cf-country') ? T.$('#cf-country').value : 'PH');
+        var digits = phoneDigits(phone, country.dial);
         var ok = true;
         ok = valid('#cf-name', name.length >= 2) && ok;
         ok = valid('#cf-email', T.validEmail(email)) && ok;
-        ok = valid('#cf-phone', (phone.replace(/\D/g, '')).length >= 7) && ok;
+        ok = valid('#cf-phone', digits.length >= 7 && digits.length <= 15) && ok;
         if (!ok) { T.toast('Please fix the highlighted fields.', 'error'); return; }
-        ck.form = { fullName: name, email: email, phone: phone, requests: T.$('#cf-req').value.trim() };
+        ck.form = {
+          fullName: name, email: email,
+          phone: phone, phoneDial: country.dial, phoneCountry: country.iso,
+          phoneFull: country.dial + ' ' + digits,
+          requests: T.$('#cf-req').value.trim()
+        };
         ck.discount = 0;
         ck.step = 2;
         window.Router.renderView('checkout', []);
@@ -101,7 +150,7 @@
           T.delay(1000).then(function () {
             var booking = S.placeBooking(S.state.cart, ck.form, ck.discount);
             ck.step = 1;
-            ck.form = { fullName: '', email: '', phone: '', requests: '' };
+            ck.form = { fullName: '', email: '', phone: '', phoneDial: '+63', phoneCountry: 'PH', phoneFull: '', requests: '' };
             ck.discount = 0;
             window.location.hash = '#/confirmation/' + booking.id;
           });
