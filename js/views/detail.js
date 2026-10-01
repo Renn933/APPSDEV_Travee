@@ -25,10 +25,10 @@
           (dest.photo
             ? '<img class="cover-img" src="' + T.esc(dest.photo) + '" alt="' + T.esc(dest.name) + '">'
             : '<div class="grad" style="background:' + cat.gradient + ';position:absolute;inset:0"></div><div class="art">' + dest.art + '</div>') +
-          '<span class="price-line">from ' + T.money(dest.price) + ' one-way</span>' +
+          '<span class="price-line num-tabular">from ' + T.money(dest.price) + ' one-way</span>' +
           '<div class="ov">' +
             '<h1>' + T.esc(dest.name) + '</h1>' +
-            '<div class="meta"><span>📍 MNL → ' + T.esc(dest.code || '—') + '</span><span>✈ ~' + dest.duration + ' min</span><span>★ ' + dest.rating.toFixed(1) + '</span><span>✦ ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
+            '<div class="meta"><span>📍 MNL → ' + T.esc(dest.code || '—') + '</span><span class="flight-time">✈ ~' + T.formatDuration(dest.duration) + '</span><span>★ ' + dest.rating.toFixed(1) + '</span><span>✦ ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
           '</div>' +
         '</div>' +
 
@@ -52,7 +52,7 @@
                   '<div class="radio-opt' + (p.id === 'economy' ? ' sel' : '') + '" data-pkg="' + p.id + '" data-mult="' + p.mult + '" data-price="' + price + '" role="radio" aria-checked="' + (p.id === 'economy' ? 'true' : 'false') + '" tabindex="0">' +
                     '<div class="label">' + p.label + '</div>' +
                     '<div class="sub">' + T.esc(p.sub) + '</div>' +
-                    '<div class="price">' + T.money(price) + '</div>' +
+                    '<div class="price num-tabular">' + T.money(price) + '</div>' +
                   '</div>';
               }).join('') +
             '</div>' +
@@ -61,7 +61,7 @@
                 '<label for="trv-val">Travelers</label>' +
                 '<div class="stepper">' +
                   '<button type="button" id="trv-dec" aria-label="Fewer travelers">−</button>' +
-                  '<span class="val" id="trv-val">1</span>' +
+                  '<span class="val num-tabular" id="trv-val">1</span>' +
                   '<button type="button" id="trv-inc" aria-label="More travelers">+</button>' +
                 '</div>' +
               '</div>' +
@@ -73,8 +73,8 @@
               '</div>' +
             '</div>' +
             '<hr class="divider">' +
-            '<div class="sum-row total"><span>Total</span><span id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
-            '<p class="small muted" id="detail-perperson"></p>' +
+            '<div class="sum-row total"><span>Total</span><span class="num-tabular" id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
+            '<p class="small muted num-tabular" id="detail-perperson"></p>' +
             '<button class="btn btn-accent" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
             '<button class="btn btn-ghost" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
               (wish ? '♥ Saved to wishlist' : '♡ Save to wishlist') +

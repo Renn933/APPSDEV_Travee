@@ -37,11 +37,11 @@
                     ? '<img class="cover-img" src="' + T.esc(d.photo) + '" alt="' + T.esc(d.name) + '" loading="lazy">'
                     : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + d.art + '</div>') +
                   '<span class="rating-tag">★ ' + d.rating.toFixed(1) + '</span>' +
-                  '<span class="price-tag">from ' + T.money(d.price) + '</span>' +
                 '</div></a>' +
                 '<div class="dcard-body">' +
                   '<h3 class="dcard-title"><a href="#/destination/' + d.id + '">' + T.esc(d.name) + '</a></h3>' +
                   '<div class="dcard-loc">MNL → ' + T.esc(d.code || '—') + ' · ' + T.esc(d.country) + '</div>' +
+                  '<div class="dcard-foot"><span class="price-tag num-tabular">from ' + T.money(d.price) + '</span></div>' +
                   '<div class="wlist-actions">' +
                     '<a class="btn btn-primary btn-sm" href="#/destination/' + d.id + '">View flight</a>' +
                     '<button class="btn btn-ghost btn-sm wish-remove" data-id="' + d.id + '" type="button">Remove</button>' +

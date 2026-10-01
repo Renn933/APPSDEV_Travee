@@ -12,7 +12,7 @@
       return '<div class="container"><div class="empty"><div class="icon">🧾</div><h3>No booking here</h3><p>We couldn’t find that booking reference.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
     }
     var itemsRows = booking.items.map(function (it) {
-      return '<div class="row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' — ' + it.pkgLabel + ' · ' + T.formatDate(it.date) + '</span><span>' + T.money(it.unit * it.travelers) + '</span></div>';
+      return '<div class="row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' — ' + it.pkgLabel + ' · ' + T.formatDate(it.date) + '</span><span class="num-tabular">' + T.money(it.unit * it.travelers) + '</span></div>';
     }).join('');
     return '' +
       '<div class="confirm-wrap">' +
@@ -24,8 +24,8 @@
           '<div class="row"><span>Booked on</span><span>' + T.formatDate(booking.created.slice(0, 10)) + '</span></div>' +
           '<div class="row"><span>Traveler</span><span>' + T.esc(booking.traveler.fullName) + '</span></div>' +
           itemsRows +
-          (booking.discount ? '<div class="row"><span>Discount</span><span class="green">−' + T.money(booking.discount) + '</span></div>' : '') +
-          '<div class="row" style="border-top:2px solid var(--line);font-weight:800"><span>Total paid</span><span>' + T.money(booking.total) + '</span></div>' +
+          (booking.discount ? '<div class="row"><span>Discount</span><span class="green num-tabular">−' + T.money(booking.discount) + '</span></div>' : '') +
+          '<div class="row" style="border-top:2px solid var(--line);font-weight:800"><span>Total paid</span><span class="num-tabular">' + T.money(booking.total) + '</span></div>' +
         '</div>' +
         '<p class="mt-3"><span class="points-award">✦ +' + booking.pointsEarned + ' loyalty points earned</span></p>' +
         '<div class="flex mt-3" style="justify-content:center">' +

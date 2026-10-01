@@ -29,10 +29,10 @@
           '<div id="cart-items">' + items.map(cartItemHtml).join('') + '</div>' +
           '<aside class="cart-summary">' +
             '<h3>Order summary</h3>' +
-            '<div class="sum-row"><span>Subtotal</span><span id="sum-subtotal">' + T.money(info.subtotal) + '</span></div>' +
-            '<div class="sum-row" id="sum-discount-row" style="display:none"><span>Discount</span><span class="green" id="sum-discount">−' + T.money(0) + '</span></div>' +
+            '<div class="sum-row"><span>Subtotal</span><span class="num-tabular" id="sum-subtotal">' + T.money(info.subtotal) + '</span></div>' +
+            '<div class="sum-row" id="sum-discount-row" style="display:none"><span>Discount</span><span class="green num-tabular" id="sum-discount">−' + T.money(0) + '</span></div>' +
             '<hr class="divider">' +
-            '<div class="sum-row total"><span>Total</span><span id="sum-total">' + T.money(info.subtotal) + '</span></div>' +
+            '<div class="sum-row total"><span>Total</span><span class="num-tabular" id="sum-total">' + T.money(info.subtotal) + '</span></div>' +
             '<div class="field mt-1">' +
               '<label for="coupon-input">Promo code</label>' +
               '<div class="field-search">' +
@@ -40,7 +40,7 @@
                 '<button class="btn btn-soft" id="coupon-apply" type="button">Apply</button>' +
               '</div>' +
             '</div>' +
-            '<p class="points-note"><span aria-hidden="true">✦</span> You’ll earn roughly ' + Math.round(info.subtotal / 10) + ' points on this order</p>' +
+            '<p class="points-note"><span aria-hidden="true">✦</span> You’ll earn roughly <span class="num-tabular">' + Math.round(info.subtotal / 10) + '</span> points on this order</p>' +
             '<button class="btn btn-accent" style="width:100%;margin-top:.8rem" id="checkout-btn" type="button">Checkout →</button>' +
             '<button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.6rem" id="clear-cart-btn" type="button">Clear cart</button>' +
           '</aside>' +
@@ -63,14 +63,14 @@
           '<div class="cart-actions">' +
             '<div class="stepper">' +
               '<button type="button" class="trv-chg" data-delta="-1" aria-label="Fewer travelers">−</button>' +
-              '<span class="val">' + it.travelers + '</span>' +
+              '<span class="val num-tabular">' + it.travelers + '</span>' +
               '<button type="button" class="trv-chg" data-delta="1" aria-label="More travelers">+</button>' +
             '</div>' +
-            '<span class="small muted">' + it.travelers + ' traveler' + (it.travelers > 1 ? 's' : '') + ' × ' + T.money(it.unit) + '</span>' +
+            '<span class="small muted">' + it.travelers + ' traveler' + (it.travelers > 1 ? 's' : '') + ' × <span class="num-tabular">' + T.money(it.unit) + '</span></span>' +
           '</div>' +
         '</div>' +
         '<div class="cart-item-right">' +
-          '<div class="cart-line-total">' + T.money(line) + '</div>' +
+          '<div class="cart-line-total num-tabular">' + T.money(line) + '</div>' +
           '<button class="btn btn-danger btn-sm remove-btn" type="button" style="margin-top:.5rem">Remove</button>' +
         '</div>' +
       '</div>';

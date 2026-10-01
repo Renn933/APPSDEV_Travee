@@ -13,7 +13,7 @@
     var bookings = S.state.bookings;
     var tiersHtml = D.TIERS.map(function (t) {
       var isCur = t.name === li.tier.name;
-      return '<div class="tier-cell' + (isCur ? ' current' : '') + '"><strong>' + t.name + '</strong><div class="small muted">' + t.threshold + ' pts</div></div>';
+      return '<div class="tier-cell' + (isCur ? ' current' : '') + '"><strong>' + t.name + '</strong><div class="small muted"><span class="num-tabular">' + t.threshold + '</span> pts</div></div>';
     }).join('');
 
     var bookingsHtml;
@@ -32,7 +32,7 @@
               '<div class="flex"><span class="badge-status ' + cat + '">' + label + '</span></div>' +
             '</div>' +
             '<div class="flex spread mt-1">' +
-              '<span class="small muted">Total ' + T.money(b.total) + ' · <span class="green">✦ +' + b.pointsEarned + ' pts</span></span>' +
+              '<span class="small muted">Total <span class="num-tabular">' + T.money(b.total) + '</span> · <span class="green">✦ +<span class="num-tabular">' + b.pointsEarned + '</span> pts</span></span>' +
               (b.status === 'confirmed' ? '<button class="btn btn-ghost btn-sm cancel-booking" data-id="' + b.id + '" type="button">Cancel booking</button>' : '') +
             '</div>' +
           '</div>';
@@ -53,9 +53,9 @@
 
         '<div class="loyalty-card mb-3" style="margin-bottom:2rem">' +
           '<div class="flex spread"><strong style="letter-spacing:.5px">TRAVEE LOYALTY</strong><span class="tier-badge">' + li.tier.name + '</span></div>' +
-          '<div class="mt-2" style="margin-top:1rem"><div class="small" style="opacity:.9">Lifetime points: <strong>' + S.state.lifetime + '</strong></div>' +
+          '<div class="mt-2" style="margin-top:1rem"><div class="small" style="opacity:.9">Lifetime points: <strong class="num-tabular">' + S.state.lifetime + '</strong></div>' +
             '<div class="loyalty-bar"><div class="loyalty-fill" style="width:' + li.progress + '%"></div></div>' +
-            (li.next ? '<div class="small" style="opacity:.9">' + (li.next.threshold - S.state.lifetime) + ' points to reach ' + li.next.name + '</div>' : '<div class="small" style="opacity:.9">Top tier reached — legend! 🏆</div>') +
+            (li.next ? '<div class="small" style="opacity:.9"><span class="num-tabular">' + (li.next.threshold - S.state.lifetime) + '</span> points to reach ' + li.next.name + '</div>' : '<div class="small" style="opacity:.9">Top tier reached — legend! 🏆</div>') +
           '</div>' +
           '<div class="tier-row">' + tiersHtml + '</div>' +
         '</div>' +

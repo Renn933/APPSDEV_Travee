@@ -19,6 +19,16 @@
     return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
   }
 
+  function formatDuration(mins) {
+    var total = Math.max(0, Math.round(Number(mins) || 0));
+    if (total > 60) {
+      var h = Math.floor(total / 60);
+      var m = total % 60;
+      return m ? h + 'h ' + m + 'm' : h + 'h';
+    }
+    return total + ' min';
+  }
+
   function esc(str) {
     return String(str == null ? '' : str)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -95,14 +105,13 @@
           cover +
           '<span class="rating-tag">★ ' + d.rating.toFixed(1) + '</span>' +
           '<span class="cat-tag">' + cat.label + '</span>' +
-          '<span class="price-tag">from ' + money(d.price) + '</span>' +
         '</div>' +
         '<div class="dcard-body">' +
           '<h3 class="dcard-title">' + esc(d.name) + '</h3>' +
           '<div class="dcard-loc">MNL → ' + esc(d.code || '—') + ' · ' + esc(d.country) + '</div>' +
-          '<div class="dcard-meta"><span>✈ ~' + d.duration + ' min</span><span>✦ ' + esc(d.airline || d.bestSeason) + '</span></div>' +
+          '<div class="dcard-meta"><span class="flight-time">✈ ~' + formatDuration(d.duration) + '</span><span>✦ ' + esc(d.airline || d.bestSeason) + '</span></div>' +
           '<div class="dcard-foot">' +
-            '<span class="dcard-foot"></span>' +
+            '<span class="price-tag num-tabular">from ' + money(d.price) + '</span>' +
             '<a class="btn btn-primary btn-sm" href="#/destination/' + d.id + '">View flight</a>' +
           '</div>' +
         '</div>' +
@@ -112,6 +121,6 @@
   window.Travee = {
     $: $, $$: $$, money: money, formatDate: formatDate, esc: esc, uid: uid,
     debounce: debounce, validEmail: validEmail, delay: delay,
-    toast: toast, confirmModal: confirmModal, destCard: destCard
+    toast: toast, confirmModal: confirmModal, destCard: destCard, formatDuration: formatDuration
   };
 })();

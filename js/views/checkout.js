@@ -47,13 +47,13 @@
     for (var i = 0; i < items.length; i++) subtotal += items[i].unit * items[i].travelers;
     var total = Math.max(0, subtotal - ck.discount);
     var rows = items.map(function (it) {
-      return '<div class="sum-row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' · ' + it.pkgLabel + '</span><span>' + T.money(it.unit * it.travelers) + '</span></div>';
+      return '<div class="sum-row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' · ' + it.pkgLabel + '</span><span class="num-tabular">' + T.money(it.unit * it.travelers) + '</span></div>';
     }).join('');
     return '<div class="checkout-card">' +
       '<h3>Review your flights</h3>' + rows +
-      (ck.discount ? '<div class="sum-row"><span>Discount</span><span class="green">−' + T.money(ck.discount) + '</span></div>' : '') +
+      (ck.discount ? '<div class="sum-row"><span>Discount</span><span class="green num-tabular">−' + T.money(ck.discount) + '</span></div>' : '') +
       '<hr class="divider">' +
-      '<div class="sum-row total"><span>Total</span><span>' + T.money(total) + '</span></div>' +
+      '<div class="sum-row total"><span>Total</span><span class="num-tabular">' + T.money(total) + '</span></div>' +
       '<p class="small muted mt-1">Traveler: ' + T.esc(ck.form.fullName) + ' · ' + T.esc(ck.form.email) + '</p>' +
       '<div class="field mt-2"><label><input type="checkbox" id="cf-terms"> I understand this is a demo booking with no real payment or itinerary.</label></div>' +
       '<div class="flex mt-2">' +
