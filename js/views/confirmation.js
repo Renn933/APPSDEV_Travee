@@ -14,7 +14,8 @@
     var itemsRows = booking.items.map(function (it) {
       return '<div class="row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' — ' + it.pkgLabel + ' · ' + T.formatDate(it.date) + '</span><span class="num-tabular">' + T.money(it.unit * it.travelers) + '</span></div>';
     }).join('');
-    var travPhone = booking.traveler.phoneFull || booking.traveler.phone || '';
+    var trav = booking.traveler || {};
+    var travPhone = trav.phoneFull || trav.phone || '';
     return '' +
       '<div class="confirm-wrap">' +
         '<div class="success-ring">✓</div>' +
@@ -23,8 +24,10 @@
         '<div class="confirm-card">' +
           '<div class="row"><span>Reference</span><span class="reference">' + booking.ref + '</span></div>' +
           '<div class="row"><span>Booked on</span><span>' + T.formatDate(booking.created.slice(0, 10)) + '</span></div>' +
-          '<div class="row"><span>Traveler</span><span>' + T.esc(booking.traveler.fullName) + '</span></div>' +
+          '<div class="row"><span>Traveler</span><span>' + T.esc(trav.fullName) + '</span></div>' +
+          (trav.email ? '<div class="row"><span>Email</span><span>' + T.esc(trav.email) + '</span></div>' : '') +
           (travPhone ? '<div class="row"><span>Phone</span><span class="num-tabular">' + T.esc(travPhone) + '</span></div>' : '') +
+          (trav.requests ? '<div class="row stack"><span>Special requests</span><span>' + T.esc(trav.requests) + '</span></div>' : '') +
           itemsRows +
           (booking.discount ? '<div class="row"><span>Discount</span><span class="green num-tabular">−' + T.money(booking.discount) + '</span></div>' : '') +
           '<div class="row" style="border-top:2px solid var(--line);font-weight:800"><span>Total paid</span><span class="num-tabular">' + T.money(booking.total) + '</span></div>' +

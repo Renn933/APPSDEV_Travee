@@ -28,7 +28,7 @@
           '<span class="price-line num-tabular">from ' + T.money(dest.price) + ' one-way</span>' +
           '<div class="ov">' +
             '<h1>' + T.esc(dest.name) + '</h1>' +
-            '<div class="meta"><span>📍 MNL → ' + T.esc(dest.code || '—') + '</span><span class="flight-time">✈ ~' + T.formatDuration(dest.duration) + '</span><span>★ ' + dest.rating.toFixed(1) + '</span><span>✦ ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
+            '<div class="meta"><span>📍 MNL → ' + T.esc(dest.code || '—') + '</span><span class="flight-time">✈ ~' + T.formatDuration(dest.duration) + '</span><span><span class="star">★</span> ' + dest.rating.toFixed(1) + '</span><span>✦ ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
           '</div>' +
         '</div>' +
 
@@ -76,7 +76,7 @@
             '<div class="sum-row total"><span>Total</span><span class="num-tabular" id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
             '<p class="small muted num-tabular" id="detail-perperson"></p>' +
             '<button class="btn btn-accent" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
-            '<button class="btn btn-ghost" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
+            '<button class="btn btn-ghost' + (wish ? ' is-saved' : '') + '" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
               (wish ? '♥ Saved to wishlist' : '♡ Save to wishlist') +
             '</button>' +
             '<button class="btn btn-accent" style="width:100%;margin-top:.6rem" id="buy-now-btn" type="button">Book now →</button>' +
@@ -131,7 +131,9 @@
     });
     T.$('#wish-btn').addEventListener('click', function () {
       var added = S.toggleWishlist(dest.id);
-      T.$('#wish-btn').textContent = added ? '♥ Saved to wishlist' : '♡ Save to wishlist';
+      var wishBtn = T.$('#wish-btn');
+      wishBtn.textContent = added ? '♥ Saved to wishlist' : '♡ Save to wishlist';
+      wishBtn.classList.toggle('is-saved', added);
       T.toast(added ? 'Saved to wishlist' : 'Removed from wishlist', added ? 'success' : 'info');
     });
     refreshTotal();

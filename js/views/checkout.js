@@ -79,13 +79,22 @@
     var rows = items.map(function (it) {
       return '<div class="sum-row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' · ' + it.pkgLabel + '</span><span class="num-tabular">' + T.money(it.unit * it.travelers) + '</span></div>';
     }).join('');
+    var f = ck.form;
+    var travRows =
+      '<div class="sum-row"><span>Name</span><span>' + T.esc(f.fullName) + '</span></div>' +
+      (f.email ? '<div class="sum-row"><span>Email</span><span>' + T.esc(f.email) + '</span></div>' : '') +
+      (f.phoneFull ? '<div class="sum-row"><span>Phone</span><span class="num-tabular">' + T.esc(f.phoneFull) + '</span></div>' : '') +
+      (f.requests ? '<div class="sum-row stack"><span>Special requests</span><span>' + T.esc(f.requests) + '</span></div>' : '');
     return '<div class="checkout-card">' +
       '<h3>Review your flights</h3>' + rows +
       (ck.discount ? '<div class="sum-row"><span>Discount</span><span class="green num-tabular">−' + T.money(ck.discount) + '</span></div>' : '') +
       '<hr class="divider">' +
       '<div class="sum-row total"><span>Total</span><span class="num-tabular">' + T.money(total) + '</span></div>' +
-      '<p class="small muted mt-1">Traveler: ' + T.esc(ck.form.fullName) + ' · ' + T.esc(ck.form.email) + (ck.form.phoneFull ? ' · ' + T.esc(ck.form.phoneFull) : '') + '</p>' +
-      '<div class="field mt-2"><label><input type="checkbox" id="cf-terms"> I understand this is a demo booking with no real payment or itinerary.</label></div>' +
+      '<div class="review-block">' +
+        '<div class="review-head"><h4>Traveler details</h4><button class="btn btn-ghost btn-sm" id="cf-edit" type="button">Edit</button></div>' +
+        travRows +
+      '</div>' +
+      '<div class="field mt-2"><label class="terms"><input type="checkbox" id="cf-terms">I understand this is a demo booking with no real payment or itinerary.</label></div>' +
       '<div class="flex mt-2">' +
         '<button class="btn btn-ghost" id="cf-back" type="button">← Back</button>' +
         '<button class="btn btn-accent" id="cf-confirm" type="button">Confirm &amp; book</button>' +
@@ -139,6 +148,7 @@
 
     if (ck.step === 2) {
       if (T.$('#cf-back')) T.$('#cf-back').addEventListener('click', function () { ck.step = 1; window.Router.renderView('checkout', []); });
+      if (T.$('#cf-edit')) T.$('#cf-edit').addEventListener('click', function () { ck.step = 1; window.Router.renderView('checkout', []); });
       if (T.$('#cf-confirm')) {
         T.$('#cf-confirm').addEventListener('click', function () {
           var terms = T.$('#cf-terms');

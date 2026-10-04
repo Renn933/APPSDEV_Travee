@@ -103,7 +103,7 @@
       '<article class="dcard" data-id="' + d.id + '">' +
         '<div class="dcard-cover">' +
           cover +
-          '<span class="rating-tag">★ ' + d.rating.toFixed(1) + '</span>' +
+          '<span class="rating-tag"><span class="star">★</span> ' + d.rating.toFixed(1) + '</span>' +
           '<span class="cat-tag">' + cat.label + '</span>' +
         '</div>' +
         '<div class="dcard-body">' +

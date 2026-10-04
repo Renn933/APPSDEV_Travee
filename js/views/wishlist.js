@@ -36,7 +36,7 @@
                   (d.photo
                     ? '<img class="cover-img" src="' + T.esc(d.photo) + '" alt="' + T.esc(d.name) + '" loading="lazy">'
                     : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + d.art + '</div>') +
-                  '<span class="rating-tag">★ ' + d.rating.toFixed(1) + '</span>' +
+                  '<span class="rating-tag"><span class="star">★</span> ' + d.rating.toFixed(1) + '</span>' +
                 '</div></a>' +
                 '<div class="dcard-body">' +
                   '<h3 class="dcard-title"><a href="#/destination/' + d.id + '">' + T.esc(d.name) + '</a></h3>' +

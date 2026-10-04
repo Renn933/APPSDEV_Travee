@@ -77,29 +77,31 @@ js/app.js             Bootstrap + global header actions
 
 ---
 
-## 4. UI Color System — "Coastal High-Trust"
+## 4. UI Color System — Balanced triadic (Blue · Rose · Green)
 
-The UI **projects stability and security** (critical for payment/booking flows) while staying clean and readable. It follows the **60 / 30 / 10 rule** so neutrals dominate, ocean blue frames the structure, and a single accent marks the calls-to-action. The entire palette is controlled by CSS variables in `css/style.css` → `:root`, so the whole site can be re-themed from one place.
+The UI **projects stability and security** (critical for payment/booking flows) while staying clean and readable. It uses a **balanced triadic** scheme — three hues spaced ~120° apart on the colour wheel: **Ocean Blue (≈206°)** (a recommended travel blue), **Rose (≈333°)** and **Fresh Green (≈88°)** — distributed **fairly** (no single dominant hue) over neutral sand/cream surfaces. The entire palette is controlled by CSS variables in `css/style.css` → `:root`, so the whole site can be re-themed from one place.
 
-### 60 / 30 / 10 allocation
+### Neutrals-led, evenly-spread triad
 | Band | Share | Used for |
 | --- | --- | --- |
-| **Dominant neutrals** | ~60% | Page background (Soft Sand/Cream), cards, forms, modals, panels, footer (Clean White) |
-| **Secondary tone** | ~30% | Header, hero + category gradients, loyalty card, login backdrop, brand mark, links, active nav, prices, step dots (Deep Ocean Blue) |
-| **Accent (CTAs only)** | ~10% | Primary calls-to-action — "Add to cart", "Book now", "Checkout", "Continue", "Confirm & book" — plus the cart count badge (Bright Aqua) |
+| **Neutrals** | ~60% | Page background (Soft Sand/Cream), cards, forms, modals, panels, footer (Clean White) |
+| **Ocean Blue (≈206°)** | ~13% | Links, primary buttons, active nav, prices, focus & active state, brand mark |
+| **Rose (≈333°)** | ~13% | Primary CTAs, cart count badge, rating stars, wishlist-saved |
+| **Fresh Green (≈88°)** | ~13% | Loyalty points, success/done steps, ghost buttons, category tags, coupons |
 
 ### Color roles & tokens
-| Token | Band | Role | Color |
+| Token | Hue | Role | Color |
 | --- | --- | --- | --- |
-| `--sand` | 60% | **Soft Sand / Cream** — page background | `#F2E9D8` |
-| `--white` | 60% | **Clean White** — cards, forms, modals | `#FFFFFF` |
-| `--teal-900` | 30% | **Deep Ocean Blue (deepest)** — brand, hero, shadows | `#06343A` |
-| `--teal-800` | 30% | **Deep Ocean Blue (deep)** — secondary structural tone (login card, prices) | `#08454C` |
-| `--teal-700` | 30% | **Deep Ocean Blue** — secondary actions, links, active states | `#0B5D67` |
-| `--teal-600` | 30% | **Deep Ocean Blue (bright)** — borders, gradients, focus outlines | `#0E7B87` |
-| `--teal-100` / `--teal-50` | 30% | **Aqua tints** — soft backgrounds, pills, selected states | `#D7ECE6` / `#EEF7F4` |
-| `--accent` / `--accent-dark` | **10%** | **Bright Aqua accent (CTA only)** — dark ocean text sits on the aqua fill | `#8FD6C8` / `#5CC3AE` |
-| `--accent-soft` | 10% | **Accent tint** — subtle accent-tinted backgrounds | `#E2F4EF` |
+| `--sand` | — | **Soft Sand / Cream** — page background | `#F2E9D8` |
+| `--white` | — | **Clean White** — cards, forms, modals | `#FFFFFF` |
+| `--blue-900` | ~206° | **Ocean Blue (deepest)** — brand, headings, hero, shadows | `#0A2E52` |
+| `--blue-700` | ~206° | **Ocean Blue** — links, primary buttons, prices, active states | `#1560A0` |
+| `--blue-600` | ~206° | **Ocean Blue (bright)** — borders, gradients, focus outlines | `#1E7FD1` |
+| `--blue-100` / `--blue-50` | ~206° | **Blue tints** — soft backgrounds, pills | `#D5EBFB` / `#EEF6FD` |
+| `--rose-700` / `--rose-600` | ~333° | **Rose** — CTA fill (white text) & saved/selected states | `#C81E5A` / `#E0407A` |
+| `--rose-500` | ~333° | **Rose tint** — rating stars | `#F072A0` |
+| `--green-800` / `--green-700` | ~88° | **Fresh Green** — points pill (white text), ghost button text | `#4A7A0A` / `#5C940D` |
+| `--green-600` | ~88° | **Green (bright)** — borders, category tags, done steps | `#74B816` |
 | `--ink` | — | **Deep Slate-Teal** — body text | `#2B3A37` |
 | `--ink-soft` | — | **Muted Slate-Teal** — secondary text / muted | `#566661` |
 | `--line` | — | **Warm sand border** | `#E7DDCA` |
@@ -107,39 +109,39 @@ The UI **projects stability and security** (critical for payment/booking flows) 
 | `--success` | — | **Semantic success/green** | `#16A34A` |
 
 ### WCAG AA contrast strategy
-- **Secondary actions / links** use ocean `#0B5D67` → **~7.6:1** against white — passes AA (and AAA) for normal-size text.
-- **CTA buttons** pair the light aqua fill `#8FD6C8` with **dark ocean text `#06343A`** → **~8:1** (aqua itself is only ~1.7:1 against white, so it is never used behind white text) plus a `#0E7B87` border for edge definition.
-- **`#0E7B87` (~5.0:1)** is used for decorative borders, gradients, focus outlines and large graphic elements.
+- **Links / primary actions** use ocean blue `#1560A0` → **~6.5:1** against white — passes AA.
+- **CTA buttons** pair the deep rose fill `#C81E5A` with **white text** → **~5.5:1**, plus a matching `#C81E5A` border for edge definition.
+- **Fresh Green** — `#4A7A0A` carries white text on the points pill (~5.2:1) and reads as dark text on the light-green tints; `#5C940D` / `#74B816` are reserved for borders and decorative fills.
 - **Body text** is Deep Slate-Teal `#2B3A37` on white → **~11.9:1** (and ~9.9:1 on the sand background).
 
 ### Brand gradients
 | Gradient | Used for | Colors |
 | --- | --- | --- |
-| `--grad-hero` | Hero, login backdrop, loyalty card, avatar, brand mark | `#06343A → #0B5D67 → #0E7B87` |
-| `--grad-beach` | Beach category covers | `#8FD6C8 → #0B5D67` |
-| `--grad-mountain` | Mountain covers | `#0E7B87 → #06343A` |
-| `--grad-city` | City covers | `#0B5D67 → #06343A` |
-| `--grad-cultural` | Cultural covers | `#08454C → #0E7B87` |
-| `--grad-adventure` | Adventure covers | `#2FAE9E → #0B5D67` |
-| `--grad-wildlife` | Wildlife covers | `#06343A → #08454C` |
+| `--grad-hero` | Hero, login backdrop, loyalty card, avatar, brand mark | `#0A2E52 → #1560A0 → #C81E5A` |
+| `--grad-beach` | Beach category covers | `#1E7FD1 → #74B816` |
+| `--grad-mountain` | Mountain covers | `#E0407A → #1560A0` |
+| `--grad-city` | City covers | `#1560A0 → #C81E5A` |
+| `--grad-cultural` | Cultural covers | `#74B816 → #1560A0` |
+| `--grad-adventure` | Adventure covers | `#E0407A → #4A7A0A` |
+| `--grad-wildlife` | Wildlife covers | `#74B816 → #E0407A` |
 
 ---
 
 ## 5. Travel-Feel Hero
 
-The Explore page hero layers a travel atmosphere over the Deep Ocean → Ocean gradient:
+The Explore page hero layers a travel atmosphere over the deep-blue → ocean → rose gradient:
 
-1. **Aqua sunrise glow** — radial aqua light (`#8FD6C8`) in the top-right, like sun over the ocean
-2. **Ocean wake lines** — three soft rippling lines across the lower third (foam + deep ocean water shadow)
+1. **Rose sunrise glow** — radial rose light (`#F072A0`) in the top-right, like sun over the ocean
+2. **Ocean wake lines** — three soft rippling lines across the lower third (foam + deep-blue water shadow)
 3. **Diagonal sun ray** — a translucent light streak sweeping across the banner
-4. **✈ Paper-plane watermark** — large rotated plane icon top-right with a deep-ocean drop shadow
+4. **✈ Paper-plane watermark** — large rotated plane icon top-right with a deep-blue drop shadow
 
 ---
 
 ## 6. Design principles
 
 - **Trust first** — booking/payment flows use deep, stable ocean blue; no alarming colors
-- **60/30/10 discipline** — neutrals dominate (60%), ocean blue frames the structure (30%), bright aqua is reserved for CTAs (10%)
+- **Neutrals-led, balanced triad** — sand/cream + white carry ~60% of the UI, and the three triad hues (ocean blue, rose, green) are spread fairly (~13% each) with no single dominant color
 - **Calm surfaces** — soft sand/cream backgrounds with clean white cards reduce visual noise
 - **Accessible** — all normal-size text meets WCAG AA (see contrast strategy above)
 - **One source of truth** — every color, radius, shadow and font is a CSS variable; re-theming is a one-line change

@@ -43,29 +43,30 @@ A mobile-first layout with breakpoints (900px, 640px): grids collapse, the check
 - **Loading states** — skeleton cards, spinner buttons, artificial latency.
 - **Transitions** — view fade-ups, card hover lifts, toast slide-ins, cart badge bump, modal scale-in.
 - **Consistent design system** — CSS variables, shared buttons/cards/chips/forms.
-- **High-trust visual identity** — a disciplined 60/30/10 palette: Soft Sand/Cream + Clean White neutrals (60%), Deep Ocean Blue structure (30%), and Bright Aqua CTAs (10%); WCAG-AA compliant contrast with a travel-feel hero.
+- **High-trust visual identity** — a balanced triadic palette: Soft Sand/Cream + Clean White neutrals (~60%) with Ocean Blue, Rose and Fresh Green hue families used fairly (~13% each); WCAG-AA compliant contrast with a travel-feel hero.
 
 ---
 
-## 🎨 Visual identity — "Coastal High-Trust"
+## 🎨 Visual identity — Balanced triadic (Blue · Rose · Green)
 
-Booking involves payment and trip planning, so the UI is designed to **project stability and security** while staying clean and readable. The palette follows the **60 / 30 / 10 rule** — neutrals dominate, a signature tone frames the structure, and one accent marks the calls-to-action:
+Booking involves payment and trip planning, so the UI is designed to **project stability and security** while staying clean and readable. The palette uses a **balanced triadic** colour scheme — three hues spaced ~120° apart on the colour wheel: **Ocean Blue (≈206°)** (a recommended travel blue), **Rose (≈333°)** and **Fresh Green (≈88°)** — used **fairly** (no single dominant hue) over neutral sand/cream surfaces:
 
-- **60% Dominant neutrals** — Soft Sand/Cream + Clean White carry every background, card and surface so content stays readable.
-- **30% Secondary tone** — Deep Ocean Blue shapes the structure: header, hero, loyalty card, login backdrop, links, active nav, prices.
-- **10% Accent, reserved for CTAs** — Bright Aqua marks the calls-to-action **only** — "Book now", "Add to cart", "Checkout", "Continue", "Confirm & book" (plus the cart count badge).
+- **Neutrals** — Soft Sand/Cream + Clean White carry every background, card and surface so content stays readable.
+- **Blue (≈206°)** — ocean/sky/trust: links, primary buttons, active nav, prices, focus & active states.
+- **Rose (≈333°)** — sunset warmth: the primary CTAs ("Book now", "Add to cart", "Checkout", "Continue", "Confirm & book"), the cart count badge, rating stars and the wishlist-saved state.
+- **Green (≈88°)** — nature/eco: loyalty points, success/done states, ghost buttons, category tags and coupons.
 
-| Token | Band | Role | Colors |
+| Token | Hue | Role | Colors |
 | --- | --- | --- | --- |
-| `--sand` / `--white` | **60%** | **Soft Sand/Cream / Clean White** — backgrounds and content surfaces | `#F2E9D8` / `#FFFFFF` |
-| `--teal-900` / `--teal-800` | 30% | **Deep Ocean Blue (deep)** — brand, hero, loyalty card, login backdrop, active nav | `#06343A` / `#08454C` |
-| `--teal-700` / `--teal-600` | 30% | **Deep Ocean Blue** — secondary actions, links, key highlights, prices | `#0B5D67` / `#0E7B87` |
-| `--accent` / `--accent-dark` | **10%** | **Bright Aqua accent** — CTA buttons only (dark ocean text sits on the aqua fill) | `#8FD6C8` / `#5CC3AE` |
+| `--sand` / `--white` | — | **Soft Sand/Cream / Clean White** — backgrounds and content surfaces | `#F2E9D8` / `#FFFFFF` |
+| `--blue-900` → `--blue-600` | ~206° | **Ocean Blue** — brand, headings, hero, links, primary buttons, prices | `#0A2E52` → `#1E7FD1` |
+| `--rose-700` / `--rose-600` | ~333° | **Rose** — CTAs, cart badge, saved/selected states (white text on the deep fill) | `#C81E5A` / `#E0407A` |
+| `--green-800` / `--green-600` | ~88° | **Fresh Green** — points pill, ghost buttons, done/success, category tags | `#4A7A0A` / `#74B816` |
 | `--ink` / `--ink-soft` | — | **Deep Slate-Teal** — high-contrast body text & secondary text | `#2B3A37` / `#566661` |
 
-**Accessibility (WCAG AA)** — body text is Deep Slate-Teal `#2B3A37` (≈ 11.9:1 on white) and structural ocean `#0B5D67` carries links and secondary actions (≈ 7.6:1). Because bright aqua is a **light** colour (only ≈ 1.7:1 against white), CTA buttons pair the aqua fill with **dark ocean text `#06343A`** (≈ 8:1) and a `#0E7B87` border for edge definition — never white text.
+**Accessibility (WCAG AA)** — body text is Deep Slate-Teal `#2B3A37` (≈ 11.9:1 on white). Links and primary actions use ocean blue `#1560A0` (≈ 6.5:1). CTA buttons pair the deep rose fill `#C81E5A` with **white text** (≈ 5.5:1) plus a matching `#C81E5A` border for edge definition. Fresh Green `#4A7A0A` carries white text on the points pill (≈ 5.2:1) and reads as dark text on the light-green tints.
 
-**Travel-feel hero** — the Explore hero layers an aqua sunrise glow, soft ocean wake lines, a diagonal sun ray and a ✈ paper-plane watermark over the Deep Ocean → Ocean gradient. Category cover gradients (beach, mountain, city, cultural, adventure, wildlife) are all tinted to harmonize with the same palette.
+**Travel-feel hero** — the Explore hero layers a warm **rose sunrise glow**, soft ocean wake lines, a diagonal sun ray and a ✈ paper-plane watermark over the deep-blue → ocean → rose gradient. Category cover gradients cycle the three triad hues so every hue appears and they harmonize with the palette.
 
 Everything is driven by CSS variables in `css/style.css` (`:root`), so the palette can be re-themed in one place.
 
