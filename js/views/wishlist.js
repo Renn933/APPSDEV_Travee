@@ -32,19 +32,22 @@
             var cat = D.getCategory(d.cat);
             return '' +
               '<article class="dcard" data-id="' + d.id + '">' +
-                '<a href="#/destination/' + d.id + '"><div class="dcard-cover">' +
-                  (d.photo
-                    ? '<img class="cover-img" src="' + T.esc(d.photo) + '" alt="' + T.esc(d.name) + '" loading="lazy">'
-                    : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + d.art + '</div>') +
-                  '<span class="rating-tag"><span class="star">★</span> ' + d.rating.toFixed(1) + '</span>' +
-                '</div></a>' +
+                '<div class="dcard-cover">' +
+                  '<a class="cover-link" href="#/destination/' + d.id + '">' +
+                    (d.photo
+                      ? '<img class="cover-img" src="' + T.esc(d.photo) + '" alt="' + T.esc(d.name) + '" loading="lazy">'
+                      : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + d.art + '</div>') +
+                    '<span class="rating-tag"><span class="star">★</span> ' + d.rating.toFixed(1) + '</span>' +
+                  '</a>' +
+                  '<button class="card-remove" data-id="' + d.id + '" type="button" aria-label="Remove ' + T.esc(d.name) + ' from wishlist" title="Remove from wishlist">✕</button>' +
+                '</div>' +
                 '<div class="dcard-body">' +
                   '<h3 class="dcard-title"><a href="#/destination/' + d.id + '">' + T.esc(d.name) + '</a></h3>' +
                   '<div class="dcard-loc">MNL → ' + T.esc(d.code || '—') + ' · ' + T.esc(d.country) + '</div>' +
-                  '<div class="dcard-foot"><span class="price-tag num-tabular">from ' + T.money(d.price) + '</span></div>' +
-                  '<div class="wlist-actions">' +
+                  '<div class="dcard-meta"><span class="flight-time">✈ ~' + T.formatDuration(d.duration) + '</span><span>✦ ' + T.esc(d.airline || d.bestSeason) + '</span></div>' +
+                  '<div class="dcard-foot">' +
+                    '<span class="price-tag num-tabular">from ' + T.money(d.price) + '</span>' +
                     '<a class="btn btn-primary btn-sm" href="#/destination/' + d.id + '">View flight</a>' +
-                    '<button class="btn btn-ghost btn-sm wish-remove" data-id="' + d.id + '" type="button">Remove</button>' +
                   '</div>' +
                 '</div>' +
               '</article>';
@@ -54,8 +57,10 @@
   }
 
   function mount() {
-    T.$$('.wish-remove').forEach(function (b) {
-      b.addEventListener('click', function () {
+    T.$$('.card-remove').forEach(function (b) {
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
         S.toggleWishlist(b.getAttribute('data-id'));
         T.toast('Removed from wishlist', 'info');
         window.Router.renderView('wishlist', []);

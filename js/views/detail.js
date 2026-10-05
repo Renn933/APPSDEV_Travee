@@ -75,11 +75,11 @@
             '<hr class="divider">' +
             '<div class="sum-row total"><span>Total</span><span class="num-tabular" id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
             '<p class="small muted num-tabular" id="detail-perperson"></p>' +
-            '<button class="btn btn-accent" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
+            '<button class="btn btn-secondary" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
             '<button class="btn btn-ghost' + (wish ? ' is-saved' : '') + '" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
               (wish ? '♥ Saved to wishlist' : '♡ Save to wishlist') +
             '</button>' +
-            '<button class="btn btn-accent" style="width:100%;margin-top:.6rem" id="buy-now-btn" type="button">Book now →</button>' +
+            '<button class="btn btn-go btn-go-lg" style="width:100%;margin-top:.6rem" id="buy-now-btn" type="button">Book now →</button>' +
           '</div>' +
         '</div>' +
         (related.length ? (

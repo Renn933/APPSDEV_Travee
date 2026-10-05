@@ -33,7 +33,7 @@
             '</div>' +
             '<div class="flex spread mt-1">' +
               '<span class="small muted">Total <span class="num-tabular">' + T.money(b.total) + '</span> · <span class="green">✦ +<span class="num-tabular">' + b.pointsEarned + '</span> pts</span></span>' +
-              (b.status === 'confirmed' ? '<button class="btn btn-ghost btn-sm cancel-booking" data-id="' + b.id + '" type="button">Cancel booking</button>' : '') +
+              (b.status === 'confirmed' ? '<button class="btn btn-ghost btn-sm is-danger cancel-booking" data-id="' + b.id + '" type="button">Cancel booking</button>' : '') +
             '</div>' +
           '</div>';
       }).join('');

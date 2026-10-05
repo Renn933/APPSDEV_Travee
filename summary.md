@@ -38,7 +38,7 @@ It is built with **vanilla HTML, CSS, and JavaScript** — no server, no databas
 ### Screens (hash routes)
 | Route | Screen | Purpose |
 | --- | --- | --- |
-| `#/login` | Login / Register | Demo auth (localStorage) |
+| `#/login` | Sign in / Create profile | Two separate demo-auth forms (localStorage) |
 | `#/` | Explore | Hero, search, filters, sortable flight grid |
 | `#/destination/:id` | Flight Detail | Class picker, travelers, date, add to cart |
 | `#/cart` | Cart | Traveler steppers, promo codes, summary |
@@ -77,61 +77,74 @@ js/app.js             Bootstrap + global header actions
 
 ---
 
-## 4. UI Color System — Balanced triadic (Blue · Rose · Green)
+## 4. UI Color System — Split-complementary (Blue · Coral · Marigold)
 
-The UI **projects stability and security** (critical for payment/booking flows) while staying clean and readable. It uses a **balanced triadic** scheme — three hues spaced ~120° apart on the colour wheel: **Ocean Blue (≈206°)** (a recommended travel blue), **Rose (≈333°)** and **Fresh Green (≈88°)** — distributed **fairly** (no single dominant hue) over neutral sand/cream surfaces. The entire palette is controlled by CSS variables in `css/style.css` → `:root`, so the whole site can be re-themed from one place.
+The UI **projects stability and security** (critical for payment/booking flows) while staying clean and readable. It uses a **split-complementary** scheme built on **blue**: one dominant hue plus the two hues that flank its direct opposite. Blue owns roughly **90% of the visual space** to establish trust; the two warm hues share about **10%** and appear **only on action items and important details**, never on large surfaces. The entire palette is controlled by CSS variables in `css/style.css` → `:root`, so the whole site can be re-themed from one place.
 
-### Neutrals-led, evenly-spread triad
+### Blue-dominant, warm-accent rationing
 | Band | Share | Used for |
 | --- | --- | --- |
-| **Neutrals** | ~60% | Page background (Soft Sand/Cream), cards, forms, modals, panels, footer (Clean White) |
-| **Ocean Blue (≈206°)** | ~13% | Links, primary buttons, active nav, prices, focus & active state, brand mark |
-| **Rose (≈333°)** | ~13% | Primary CTAs, cart count badge, rating stars, wishlist-saved |
-| **Fresh Green (≈88°)** | ~13% | Loyalty points, success/done steps, ghost buttons, category tags, coupons |
+| **Blue family** | ~90% | Page background (Clean Off-White), cards, forms, modals, nav bar, footer, headings, links, primary buttons, prices, active nav, focus rings, all cover gradients |
+| **Sunset Coral** | ~5% | Primary CTAs (*Book now*, *Checkout*, *Confirm & book*), cart count badge, saved-wishlist state, detail price pill |
+| **Marigold** | ~5% | Rating stars, active filter chips, category tags, loyalty points & progress bar, promo/deal badges, secondary buttons |
 
 ### Color roles & tokens
-| Token | Hue | Role | Color |
-| --- | --- | --- | --- |
-| `--sand` | — | **Soft Sand / Cream** — page background | `#F2E9D8` |
-| `--white` | — | **Clean White** — cards, forms, modals | `#FFFFFF` |
-| `--blue-900` | ~206° | **Ocean Blue (deepest)** — brand, headings, hero, shadows | `#0A2E52` |
-| `--blue-700` | ~206° | **Ocean Blue** — links, primary buttons, prices, active states | `#1560A0` |
-| `--blue-600` | ~206° | **Ocean Blue (bright)** — borders, gradients, focus outlines | `#1E7FD1` |
-| `--blue-100` / `--blue-50` | ~206° | **Blue tints** — soft backgrounds, pills | `#D5EBFB` / `#EEF6FD` |
-| `--rose-700` / `--rose-600` | ~333° | **Rose** — CTA fill (white text) & saved/selected states | `#C81E5A` / `#E0407A` |
-| `--rose-500` | ~333° | **Rose tint** — rating stars | `#F072A0` |
-| `--green-800` / `--green-700` | ~88° | **Fresh Green** — points pill (white text), ghost button text | `#4A7A0A` / `#5C940D` |
-| `--green-600` | ~88° | **Green (bright)** — borders, category tags, done steps | `#74B816` |
-| `--ink` | — | **Deep Slate-Teal** — body text | `#2B3A37` |
-| `--ink-soft` | — | **Muted Slate-Teal** — secondary text / muted | `#566661` |
-| `--line` | — | **Warm sand border** | `#E7DDCA` |
-| `--danger` | — | **Semantic error/red** | `#DC2626` |
-| `--success` | — | **Semantic success/green** | `#16A34A` |
+| Token | Role | Color |
+| --- | --- | --- |
+| `--navy-900` | **Deep Sapphire** — nav bar, footer, headings, structure | `#0A192F` |
+| `--navy-800` | **Sapphire** — primary buttons, prices, emphasis | `#12294A` |
+| `--navy-700` / `--navy-100` / `--navy-50` | **Sapphire tints** — totals, muted surfaces, toggles | `#1B3A63` / `#E4EAF2` / `#F1F5FA` |
+| `--sky-500` | **Sky Blue** — icons, active nav underline, decorative fills | `#00A4E4` |
+| `--sky-700` / `--sky-600` | **Deep Sky** — link text, borders, hover | `#0072AC` / `#0087BE` |
+| `--sky-100` / `--sky-50` | **Sky tints** — soft info backgrounds | `#DCF0FB` / `#F0F9FE` |
+| `--coral-500` | **Sunset Coral** — primary CTA fill (white text) | `#FF5A5F` |
+| `--coral-700` / `--coral-600` | **Deep Coral** — CTA border & hover, cart badge, saved state | `#C42B31` / `#F0444A` |
+| `--marigold-500` | **Marigold** — stars, filters, badges, loyalty, secondary CTAs | `#FFB81C` |
+| `--marigold-600` / `--marigold-100` / `--marigold-50` | **Marigold shades** — borders, tints | `#C98A00` / `#FFF0CC` / `#FFF8E7` |
+| `--bg` | **Clean Off-White** — page background | `#F8FAFC` |
+| `--white` | **Clean White** — cards, forms, modals | `#FFFFFF` |
+| `--ink` | **Sapphire ink** — body text | `#1C2B41` |
+| `--ink-soft` | **Muted sapphire** — secondary text | `#51627C` |
+| `--line` | **Cool border** | `#E2E8F0` |
+| `--success` | **Semantic success** (not brand) — done/success | `#0E7C5A` |
+| `--danger` | **Semantic destructive** (not brand) | `#B3261E` |
 
 ### WCAG AA contrast strategy
-- **Links / primary actions** use ocean blue `#1560A0` → **~6.5:1** against white — passes AA.
-- **CTA buttons** pair the deep rose fill `#C81E5A` with **white text** → **~5.5:1**, plus a matching `#C81E5A` border for edge definition.
-- **Fresh Green** — `#4A7A0A` carries white text on the points pill (~5.2:1) and reads as dark text on the light-green tints; `#5C940D` / `#74B816` are reserved for borders and decorative fills.
-- **Body text** is Deep Slate-Teal `#2B3A37` on white → **~11.9:1** (and ~9.9:1 on the sand background).
+Ratios below were computed with the WCAG relative-luminance formula, not estimated:
+
+- **Deep Sapphire `#0A192F` on white → 17.6:1** (AAA) — carries the nav bar, footer and every heading.
+- **Body ink `#1C2B41` on Clean Off-White `#F8FAFC` → 13.6:1** (AAA); muted ink `#51627C` → **5.9:1** (AA).
+- **Links** use Deep Sky `#0072AC` → **5.25:1** (AA). Sky Blue `#00A4E4` is only 2.83:1 on white, so it is **restricted to icons, active underlines and decorative fills**, never link text.
+- **Primary CTAs** pair Sunset Coral `#FF5A5F` with white text (3.05:1 — passes AA for large/bold UI elements, not body copy) plus a Deep Coral `#C42B31` border for edge definition; hover darkens to `#F0444A` (3.73:1).
+- **Marigold never carries white text** — navy `#0A192F` on `#FFB81C` is **10.2:1** (AAA).
+- **Cart badge** uses Deep Coral `#C42B31` → **5.6:1** (AA) so the tiny white numeral stays legible.
+- **Semantic success** `#0E7C5A` → **5.2:1** (AA); **destructive** `#B3261E` → **6.5:1** (AA).
+
+**Colour discipline rules**
+- Coral is confined to `.btn-accent`, `.btn-ghost.is-saved`, `.badge` and `.detail-cover .price-line` — the ultimate actions plus the cart count.
+- Destructive actions (*Clear cart*, *Cancel booking*) use red via `.btn-ghost.is-danger`, never marigold, so "delete" never reads cheerful.
+- Completed checkout steps use semantic green so "done" never reads as another call to action.
 
 ### Brand gradients
 | Gradient | Used for | Colors |
 | --- | --- | --- |
-| `--grad-hero` | Hero, login backdrop, loyalty card, avatar, brand mark | `#0A2E52 → #1560A0 → #C81E5A` |
-| `--grad-beach` | Beach category covers | `#1E7FD1 → #74B816` |
-| `--grad-mountain` | Mountain covers | `#E0407A → #1560A0` |
-| `--grad-city` | City covers | `#1560A0 → #C81E5A` |
-| `--grad-cultural` | Cultural covers | `#74B816 → #1560A0` |
-| `--grad-adventure` | Adventure covers | `#E0407A → #4A7A0A` |
-| `--grad-wildlife` | Wildlife covers | `#74B816 → #E0407A` |
+| `--grad-hero` | Hero, login backdrop, loyalty card, avatar, brand mark | `#0A192F → #123A63 → #0E6FA8` |
+| `--grad-beach` | Beach category covers | `#0087BE → #00A4E4` |
+| `--grad-mountain` | Mountain covers | `#0A192F → #24507F` |
+| `--grad-city` | City covers | `#12294A → #0087BE` |
+| `--grad-cultural` | Cultural covers | `#1B3A63 → #00A4E4` |
+| `--grad-adventure` | Adventure covers | `#0A192F → #0072AC` |
+| `--grad-wildlife` | Wildlife covers | `#0E6FA8 → #1B3A63` |
+
+All cover gradients stay blue-dominant so the warm hues never take over a screen.
 
 ---
 
 ## 5. Travel-Feel Hero
 
-The Explore page hero layers a travel atmosphere over the deep-blue → ocean → rose gradient:
+The Explore page hero layers a travel atmosphere over the Deep Sapphire → ocean-blue gradient:
 
-1. **Rose sunrise glow** — radial rose light (`#F072A0`) in the top-right, like sun over the ocean
+1. **Marigold sunrise glow** — radial warm light (`#FFB81C` at low opacity) in the top-right, like sun over the ocean
 2. **Ocean wake lines** — three soft rippling lines across the lower third (foam + deep-blue water shadow)
 3. **Diagonal sun ray** — a translucent light streak sweeping across the banner
 4. **✈ Paper-plane watermark** — large rotated plane icon top-right with a deep-blue drop shadow
@@ -140,9 +153,9 @@ The Explore page hero layers a travel atmosphere over the deep-blue → ocean �
 
 ## 6. Design principles
 
-- **Trust first** — booking/payment flows use deep, stable ocean blue; no alarming colors
-- **Neutrals-led, balanced triad** — sand/cream + white carry ~60% of the UI, and the three triad hues (ocean blue, rose, green) are spread fairly (~13% each) with no single dominant color
-- **Calm surfaces** — soft sand/cream backgrounds with clean white cards reduce visual noise
+- **Trust first** — booking/payment flows use deep, stable sapphire blue; no alarming colors
+- **Blue-dominant split-complementary** — blue covers ~90% of the UI while coral (~5%) and marigold (~5%) are rationed to CTAs, filters and detail highlights
+- **Calm surfaces** — clean off-white background with white cards reduce visual noise
 - **Accessible** — all normal-size text meets WCAG AA (see contrast strategy above)
 - **One source of truth** — every color, radius, shadow and font is a CSS variable; re-theming is a one-line change
 - **Consistent components** — shared buttons, cards, chips, forms, toasts, modals across all 8 screens

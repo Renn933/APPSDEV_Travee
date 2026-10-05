@@ -16,6 +16,14 @@
     }).join('');
     var trav = booking.traveler || {};
     var travPhone = trav.phoneFull || trav.phone || '';
+    /* List every booked traveler. Older bookings (saved before per-traveler
+       names existed) have no array, so fall back to the single lead name. */
+    var travNames = (trav.travelers && trav.travelers.length)
+      ? trav.travelers
+      : [{ fullName: trav.fullName }];
+    var travRows = travNames.map(function (t, i) {
+      return '<div class="row"><span>' + (i === 0 ? 'Lead traveler' : 'Traveler ' + (i + 1)) + '</span><span>' + T.esc(t.fullName) + '</span></div>';
+    }).join('');
     return '' +
       '<div class="confirm-wrap">' +
         '<div class="success-ring">✓</div>' +
@@ -24,7 +32,8 @@
         '<div class="confirm-card">' +
           '<div class="row"><span>Reference</span><span class="reference">' + booking.ref + '</span></div>' +
           '<div class="row"><span>Booked on</span><span>' + T.formatDate(booking.created.slice(0, 10)) + '</span></div>' +
-          '<div class="row"><span>Traveler</span><span>' + T.esc(trav.fullName) + '</span></div>' +
+          '<div class="row"><span>Travelers</span><span class="num-tabular">' + travNames.length + '</span></div>' +
+          travRows +
           (trav.email ? '<div class="row"><span>Email</span><span>' + T.esc(trav.email) + '</span></div>' : '') +
           (travPhone ? '<div class="row"><span>Phone</span><span class="num-tabular">' + T.esc(travPhone) + '</span></div>' : '') +
           (trav.requests ? '<div class="row stack"><span>Special requests</span><span>' + T.esc(trav.requests) + '</span></div>' : '') +

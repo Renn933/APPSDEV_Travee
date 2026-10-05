@@ -41,8 +41,8 @@
               '</div>' +
             '</div>' +
             '<p class="points-note"><span aria-hidden="true">✦</span> You’ll earn roughly <span class="num-tabular">' + Math.round(info.subtotal / 10) + '</span> points on this order</p>' +
-            '<button class="btn btn-accent" style="width:100%;margin-top:.8rem" id="checkout-btn" type="button">Checkout →</button>' +
-            '<button class="btn btn-ghost btn-sm" style="width:100%;margin-top:.6rem" id="clear-cart-btn" type="button">Clear cart</button>' +
+            '<button class="btn btn-go btn-go-lg" style="width:100%;margin-top:.8rem" id="checkout-btn" type="button">Checkout →</button>' +
+            '<button class="btn btn-ghost btn-sm is-danger" style="width:100%;margin-top:.6rem" id="clear-cart-btn" type="button">Clear cart</button>' +
           '</aside>' +
         '</div>' +
       '</div>';
