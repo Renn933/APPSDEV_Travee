@@ -158,12 +158,21 @@
   ];
 
   function getCategory(cat) { return CATEGORIES[cat] || { label: cat, gradient: 'var(--grad-city)', icon: '🌍' }; }
+  /* Destinations are CRUD-managed (admin) and persisted in state, so reads go
+     through the live list when it exists; the static array stays as the seed. */
+  function liveDestinations() {
+    if (window.TraveeState && typeof window.TraveeState.allDestinations === 'function') {
+      return window.TraveeState.allDestinations();
+    }
+    return DESTINATIONS;
+  }
   function getDestination(id) {
-    for (var i = 0; i < DESTINATIONS.length; i++) if (DESTINATIONS[i].id === id) return DESTINATIONS[i];
+    var list = liveDestinations();
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
     return null;
   }
   function sameCategoryDestinations(d) {
-    return DESTINATIONS.filter(function (x) { return x.cat === d.cat && x.id !== d.id; });
+    return liveDestinations().filter(function (x) { return x.cat === d.cat && x.id !== d.id; });
   }
   function packagePrice(base, mult) { return Math.round((base * mult) / 10) * 10; }
 

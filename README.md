@@ -22,6 +22,8 @@ The app swaps entire views through a small hash router — each is a separate sc
 | `#/confirmation/:id` | **Confirmation** — receipt + loyalty points |
 | `#/wishlist` | **Saved flights** — wishlist with quick actions |
 | `#/profile` | **Profile** — account, loyalty tier, booking history |
+| `#/dashboard` | **Flight status board** — Available / Boarding / Cancelled (all roles) |
+| `#/users` | **Manage users** — admin-only account creation & removal |
 
 ### Three+ features that hold and change state
 - **Cart** — add/remove flights, adjust travelers, clear, persist to localStorage.
@@ -32,6 +34,33 @@ The app swaps entire views through a small hash router — each is a separate sc
 
 ### Data-driven rendering
 All routes, regions, flight classes, coupons and loyalty tiers live as **JavaScript data** in `js/data.js` — every route carries a fare (₱), flight time, airline and a local photo from `images/`. View markup is generated from that data — no copy-pasted HTML anywhere.
+
+### User roles & accounts
+Accounts are **username + password** (stored in your browser — this is a demo, not real security). Three built-in accounts are seeded on first run:
+
+| Username | Password | Role | Lands on |
+| --- | --- | --- | --- |
+| `admin` | `admin123` | **Admin** (destinations + users) | Explore (destination manager) |
+| `receptionist` | `recep123` | **Receptionist** | Flight status board |
+| `dashboard` | `dash123` | **Dashboard** (read-only board) | Flight status board |
+
+Anyone can also **Create profile** on the login screen, which makes a plain **Traveler** account (the booking funnel: Explore, detail, cart, checkout, saved flights, profile).
+
+Roles live in `js/roles.js` (routes + capabilities per role); `js/state.js` holds the account directory and exposes `signIn` / `signUp` / `createUser` / `canAccess` / `can`, and the router redirects anyone who lands on a screen their role can't use.
+
+| Role | Can open | Extra |
+| --- | --- | --- |
+| **Traveler** | Explore, detail, cart, checkout, confirmation, saved, profile, dashboard | — |
+| **Receptionist** | Explore, detail, cart, checkout, confirmation, saved, profile, dashboard | Can set flights **Available ⇄ Boarding** and **Cancel** |
+| **Dashboard** | Dashboard only | Read-only board |
+| **Admin** | Explore, profile, dashboard, **Users** | **CRUD on Explore destinations** + manage accounts |
+
+Only **Traveler** and **Receptionist** get the **Saved** and **Cart** links — the admin books nothing, so those routes (and checkout/confirmation) are closed to that role and the nav links hide automatically.
+
+**Two admin screens.** The **Users** screen (nav link, admin-only) lets the admin mint receptionist / admin / dashboard / traveler accounts and remove existing ones (the built-in `admin` and your own account are protected). The **Explore** screen becomes a **destination manager**: the admin can **create, edit and delete** the flight routes every customer sees, and changes are persisted to `localStorage`, so adding, changing or removing a destination immediately updates what travelers and receptionists see on Explore, the detail pages and related-route lists. Deleting a route also drops it from any saved list or cart that referenced it.
+
+### Flight status board
+The **Dashboard** is viewable by **every signed-in role**. It shows the live situation of each flight — 🟢 **Available**, 🛫 **Boarding** or ⛔ **Cancelled** — with summary tiles and a status filter. Staff roles (admin, receptionist) can flip a confirmed flight between Available/Boarding or cancel it; the Dashboard role and travelers just watch.
 
 ### Responsive
 A mobile-first layout with breakpoints (900px, 640px): grids collapse, the checkout two-column collapses, and nav adapts. Tested on phone and laptop widths.
@@ -115,10 +144,11 @@ index.html            App shell (header, footer, mount point)
 css/style.css         Full design system (responsive)
 images/               Destination photos (local, Wikimedia Commons)
 js/data.js            All content as JS data (routes, regions, fares, airlines, photos)
-js/state.js           Single source of truth, persisted to localStorage
+js/roles.js           User roles: which routes/capabilities each role has
+js/state.js           Single source of truth, persisted to localStorage (accounts + session, cart, wishlist, bookings, points, filters)
 js/utils.js           Money/date/validation, toast, confirm modal, card markup
-js/router.js          Hash router with auth guarding + chrome updates
-js/views/             One file per screen
+js/router.js          Hash router with auth + role guarding and chrome updates
+js/views/             One file per screen (incl. dashboard.js flight board & users.js)
 js/app.js             Bootstrap + global header actions
 ```
 

@@ -13,11 +13,10 @@
     { pattern: /^#\/confirmation\/([\w-]+)\/?$/, view: 'confirmation' },
     { pattern: /^#\/wishlist\/?$/,               view: 'wishlist' },
     { pattern: /^#\/profile\/?$/,                view: 'profile' },
+    { pattern: /^#\/dashboard\/?$/,              view: 'dashboard' },
+    { pattern: /^#\/users\/?$/,                  view: 'users' },
     { pattern: /^#\/login\/?$/,                  view: 'login' }
   ];
-
-  // Views that require a logged-in user.
-  var PROTECTED = { home: 1, detail: 1, cart: 1, checkout: 1, confirmation: 1, wishlist: 1, profile: 1 };
 
   var current = null;
 
@@ -60,11 +59,16 @@
     logoutBtn.hidden = !authed;
     logoutBtn.classList.toggle('hidden', !authed);
 
-    // Active nav link.
-    var map = { home: 'home', wishlist: 'wishlist', cart: 'cart', profile: 'profile' };
+    // Active nav link + role-based visibility (hide links the role can't open).
+    var map = { home: 'home', wishlist: 'wishlist', cart: 'cart', profile: 'profile', dashboard: 'dashboard', users: 'users' };
     var activeKey = map[viewName];
     window.Travee.$$('#site-header [data-nav]').forEach(function (a) {
-      a.classList.toggle('active', a.getAttribute('data-nav') === activeKey);
+      var key = a.getAttribute('data-nav');
+      a.classList.toggle('active', key === activeKey);
+      var view = a.getAttribute('data-view') || key;
+      var allowed = window.TraveeState.canAccess(view);
+      a.hidden = !allowed;
+      a.classList.toggle('hidden', !allowed);
     });
     refreshBars();
   }
@@ -94,14 +98,24 @@
 
   function navigate() {
     var r = parseHash();
-    // Auth guard.
-    if (PROTECTED[r.view] && !window.TraveeState.isAuthed()) {
-      if (current !== 'login') { window.location.hash = '#/login'; }
+    // Guests can only see the login screen.
+    if (!window.TraveeState.isAuthed()) {
+      if (r.view !== 'login') {
+        if (current !== 'login') { window.location.hash = '#/login'; }
+        return;
+      }
+      current = 'login';
+      renderView('login', r.params);
       return;
     }
-    // Logged-in users shouldn't linger on login.
-    if (r.view === 'login' && window.TraveeState.isAuthed()) {
-      window.location.hash = '#/';
+    // Logged-in users shouldn't linger on login — send them to their role home.
+    if (r.view === 'login') {
+      window.location.hash = window.TraveeState.roleHome();
+      return;
+    }
+    // Role guard: bounce to the role's home if this view isn't allowed.
+    if (!window.TraveeState.canAccess(r.view)) {
+      window.location.hash = window.TraveeState.roleHome();
       return;
     }
     current = r.view;
@@ -114,6 +128,8 @@
     document.addEventListener('click', function (e) {
       var card = e.target.closest('.dcard');
       if (card && !e.target.closest('a') && !e.target.closest('button')) {
+        // Only open the detail page if this role may see it (admin does not).
+        if (!window.TraveeState.canAccess('detail')) return;
         window.location.hash = '#/destination/' + card.getAttribute('data-id');
       }
     });

@@ -45,7 +45,7 @@
           '<div class="avatar">' + T.esc(user.avatar) + '</div>' +
           '<div style="flex:1">' +
             '<h2 style="margin:0">' + T.esc(user.name) + '</h2>' +
-            '<div class="muted">' + T.esc(user.email) + '</div>' +
+            '<div class="muted">@' + T.esc(user.username || '') + ' · ' + T.esc((S.currentRole() || {}).label || 'Traveler') + '</div>' +
             '<div class="flex mt-1"><span class="points-pill">✦ ' + S.state.points + ' points available</span></div>' +
           '</div>' +
           '<button class="btn btn-ghost" id="profile-logout" type="button">Sign out</button>' +

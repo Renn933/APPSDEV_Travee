@@ -483,3 +483,66 @@ input,select,textarea { font:inherit; color:inherit; }
 .badge-status.confirmed { background:var(--success-100); color:var(--success); }
 .badge-status.cancelled { background:var(--danger-50); color:var(--danger); }
 .badge-status.upcoming { background:var(--navy-50); color:var(--navy-800); }
+/* Flight status board — Available / Boarding / Cancelled */
+.badge-status.available { background:var(--success-100); color:var(--success); }
+.badge-status.boarding { background:var(--marigold-100); color:var(--marigold-600); }
+.badge-status.cancelled { background:var(--danger-50); color:var(--danger); }
+
+/* ============================================================
+   Roles & Dashboard
+   ============================================================ */
+/* Role badge shown in the dashboard header */
+.role-badge { display:inline-flex; align-items:center; gap:.4rem; background:var(--navy-800); color:#fff; border:1px solid var(--sky-600); padding:.4rem .9rem; border-radius:999px; font-weight:700; font-size:.9rem; white-space:nowrap; }
+
+/* Stat cards */
+.dash-stats { display:grid; gap:1rem; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); }
+.stat-card { display:flex; align-items:center; gap:.9rem; background:var(--white); border:1px solid var(--line); border-radius:var(--radius); padding:1rem 1.1rem; box-shadow:var(--shadow-sm); }
+.stat-icon { width:46px; height:46px; flex:none; border-radius:12px; display:grid; place-items:center; font-size:1.4rem; background:var(--navy-50); }
+.stat-num { font-size:1.5rem; color:var(--navy-900); line-height:1.1; }
+.stat-label { font-size:.8rem; color:var(--ink-soft); font-weight:600; }
+.stat-card.ok .stat-icon { background:var(--success-100); }
+.stat-card.bad .stat-icon { background:var(--danger-50); }
+.stat-card.gold .stat-icon { background:var(--marigold-100); }
+
+/* Two-column dashboard body */
+.dash-cols { display:grid; gap:1.4rem; grid-template-columns:1fr 1.4fr; align-items:start; }
+.dash-h { font-size:1.1rem; margin-bottom:1rem; }
+
+/* Top routes — labelled horizontal bars */
+.top-routes { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:.85rem; }
+.top-routes li { display:grid; grid-template-columns:8.5rem 1fr 2rem; align-items:center; gap:.7rem; }
+.tr-name { font-weight:650; color:var(--navy-900); font-size:.9rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.tr-bar { height:12px; background:var(--navy-50); border-radius:999px; overflow:hidden; }
+.tr-bar > span { display:block; height:100%; background:linear-gradient(90deg,var(--sky-600),var(--sky-500)); border-radius:999px; }
+.tr-count { text-align:right; font-weight:800; color:var(--navy-800); }
+
+@media (max-width: 860px) {
+  .dash-cols { grid-template-columns:1fr; }
+  .top-routes li { grid-template-columns:7rem 1fr 1.8rem; }
+}
+
+/* Login — one-tap demo account buttons */
+.demo-roles { margin-top:1.1rem; padding-top:1rem; border-top:1px dashed var(--line); text-align:center; }
+.demo-roles-label { display:block; font-size:.8rem; color:var(--ink-soft); font-weight:600; margin-bottom:.6rem; }
+.demo-roles-row { display:flex; gap:.5rem; justify-content:center; flex-wrap:wrap; }
+
+/* Manage users — same two-column rhythm as the dashboard body */
+.users-cols { display:grid; gap:1.4rem; grid-template-columns:1fr 1.2fr; align-items:start; }
+.user-row .booking-head { align-items:center; }
+@media (max-width: 860px) {
+  .users-cols { grid-template-columns:1fr; }
+}
+
+/* Manage destinations — admin CRUD screen on Explore.
+   Left = add/edit form (2-col grid), right = live route list. */
+.dest-form { display:grid; gap:0 .9rem; grid-template-columns:1fr 1fr; }
+.dest-form .field { margin-bottom:.2rem; }
+.dest-form .field.wide { grid-column:1 / -1; }
+.dest-form textarea { resize:vertical; min-height:76px; }
+.dest-form .field-select { width:100%; }
+.dest-row.editing { border-color:var(--sky-600); box-shadow:0 0 0 1px var(--sky-600); }
+.dest-meta { display:flex; flex-wrap:wrap; gap:.4rem .9rem; }
+.dest-tagline { flex:1; min-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+@media (max-width: 620px) {
+  .dest-form { grid-template-columns:1fr; }
+}

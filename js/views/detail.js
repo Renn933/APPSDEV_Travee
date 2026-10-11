@@ -36,10 +36,11 @@
           '<div class="detail-main">' +
             '<div class="tagline-card mb-2"><span aria-hidden="true">💬</span> ' + T.esc(dest.tagline) + '</div>' +
             '<h2>About this destination</h2>' +
-            '<p>' + T.esc(dest.description) + '</p>' +
-            '<h2>Highlights</h2>' +
-            '<ul class="highlights">' + dest.highlights.map(function (h) { return '<li><span class="tick">✓</span>' + T.esc(h) + '</li>'; }).join('') + '</ul>' +
-            '<div class="tagline-card"><span aria-hidden="true">✈</span> Airline: <strong>' + T.esc(dest.airline || dest.bestSeason) + '</strong> · <span aria-hidden="true">🗓</span> Best season: <strong>' + T.esc(dest.bestSeason) + '</strong></div>' +
+            '<p>' + T.esc(dest.description || '') + '</p>' +
+            (Array.isArray(dest.highlights) && dest.highlights.length
+              ? '<h2>Highlights</h2><ul class="highlights">' + dest.highlights.map(function (h) { return '<li><span class="tick">✓</span>' + T.esc(h) + '</li>'; }).join('') + '</ul>'
+              : '') +
+            '<div class="tagline-card"><span aria-hidden="true">✈</span> Airline: <strong>' + T.esc(dest.airline || dest.bestSeason || '—') + '</strong> · <span aria-hidden="true">🗓</span> Best season: <strong>' + T.esc(dest.bestSeason || 'Year-round') + '</strong></div>' +
           '</div>' +
 
           '<div class="book-card">' +
