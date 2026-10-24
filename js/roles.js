@@ -20,7 +20,7 @@
     traveler: {
       id: 'traveler',
       label: 'Traveler',
-      icon: '🧳',
+      icon: 'suitcase',
       tagline: 'Book flights, save trips, earn points',
       home: '#/',
       routes: ['home', 'detail', 'cart', 'checkout', 'confirmation', 'wishlist', 'profile', 'dashboard'],
@@ -29,7 +29,7 @@
     receptionist: {
       id: 'receptionist',
       label: 'Receptionist',
-      icon: '🛎',
+      icon: 'bell',
       tagline: 'Front-desk booking & flight board',
       home: '#/dashboard',
       routes: ['home', 'detail', 'cart', 'checkout', 'confirmation', 'wishlist', 'profile', 'dashboard'],
@@ -38,7 +38,7 @@
     dashboard: {
       id: 'dashboard',
       label: 'Dashboard',
-      icon: '📊',
+      icon: 'chart',
       tagline: 'Read-only flight status board',
       home: '#/dashboard',
       routes: ['dashboard'],
@@ -47,7 +47,7 @@
     admin: {
       id: 'admin',
       label: 'Admin',
-      icon: '🛡',
+      icon: 'shield',
       tagline: 'Destinations & users',
       home: '#/',
       /* No cart / checkout / confirmation / wishlist — the admin books nothing.

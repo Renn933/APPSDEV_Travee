@@ -25,7 +25,7 @@
       DEMO_ACCOUNTS.map(function (a) {
         var r = window.TraveeRoles.getRole(a.role);
         return '<button class="btn btn-ghost btn-sm demo-role" type="button" data-username="' + a.username + '" data-password="' + a.password + '">' +
-          r.icon + ' ' + T.esc(r.label) + '</button>';
+          T.icon(r.icon) + ' ' + T.esc(r.label) + '</button>';
       }).join('') +
       '</div></div>';
   }
@@ -77,8 +77,8 @@
     var manual = count + ' flight routes across the Philippines and beyond';
     var create = window.Views.login._mode === 'create';
     return '<div class="login-wrap"><div class="login-card">' +
-      '<div class="login-brand"><span class="brand-mark" aria-hidden="true">✈</span> <span class="brand-name">TRAVEE</span></div>' +
-      '<div class="center"><span class="demo-shield">🔒 Demo login — accounts saved in your browser</span></div>' +
+      '<div class="login-brand"><span class="brand-mark" aria-hidden="true">' + T.icon('plane') + '</span> <span class="brand-name">TRAVEE</span></div>' +
+      '<div class="center"><span class="demo-shield">' + T.icon('lock') + ' Demo login — accounts saved in your browser</span></div>' +
       '<div class="tabs" role="tablist" aria-label="Sign in or create a profile">' +
       '<button class="tab' + (create ? '' : ' active') + '" data-tab="signin" type="button" role="tab" id="tab-signin" aria-selected="' + (!create) + '" aria-controls="login-panel" tabindex="' + (create ? '-1' : '0') + '">Sign in</button>' +
       '<button class="tab' + (create ? ' active' : '') + '" data-tab="create" type="button" role="tab" id="tab-create" aria-selected="' + create + '" aria-controls="login-panel" tabindex="' + (create ? '0' : '-1') + '">Create profile</button>' +

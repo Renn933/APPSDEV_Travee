@@ -22,7 +22,7 @@
         '<div class="booking-head">' +
           '<div><strong>' + T.esc(u.name) + '</strong>' +
             '<div class="small muted">@' + T.esc(u.username) + '</div></div>' +
-          '<span class="role-badge">' + role.icon + ' ' + T.esc(role.label) + '</span>' +
+          '<span class="role-badge">' + T.icon(role.icon) + ' ' + T.esc(role.label) + '</span>' +
         '</div>' +
         '<div class="flex spread mt-1">' +
           '<span class="small muted">' + (isAdmin ? 'Built-in superuser' : (isSelf ? 'This is you' : T.esc(role.tagline))) + '</span>' +
@@ -35,11 +35,11 @@
 
   function render() {
     if (!S.can('manage_users')) {
-      return '<div class="container"><div class="empty"><div class="icon">🔒</div><h3>Admins only</h3><p>You don’t have permission to manage users.</p><a class="btn btn-primary" href="#/dashboard">Back to board</a></div></div>';
+      return '<div class="container"><div class="empty"><div class="icon">' + T.icon('lock') + '</div><h3>Admins only</h3><p>You don’t have permission to manage users.</p><a class="btn btn-primary" href="#/dashboard">Back to board</a></div></div>';
     }
     var users = S.listUsers();
     var roleOpts = assignableRoles().map(function (r) {
-      return '<option value="' + r.id + '">' + r.icon + '  ' + T.esc(r.label) + ' — ' + T.esc(r.tagline) + '</option>';
+      return '<option value="' + r.id + '">' + T.esc(r.label) + ' — ' + T.esc(r.tagline) + '</option>';
     }).join('');
 
     return '' +

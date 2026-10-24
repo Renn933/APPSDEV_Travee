@@ -9,7 +9,7 @@
   function render(params) {
     var booking = S.getBooking(params && params[0]);
     if (!booking) {
-      return '<div class="container"><div class="empty"><div class="icon">🧾</div><h3>No booking here</h3><p>We couldn’t find that booking reference.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
+      return '<div class="container"><div class="empty"><div class="icon">' + T.icon('receipt') + '</div><h3>No booking here</h3><p>We couldn’t find that booking reference.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
     }
     var itemsRows = booking.items.map(function (it) {
       return '<div class="row"><span>' + it.travelers + '× ' + T.esc(it.destName) + ' — ' + it.pkgLabel + ' · ' + T.formatDate(it.date) + '</span><span class="num-tabular">' + T.money(it.unit * it.travelers) + '</span></div>';
@@ -26,9 +26,9 @@
     }).join('');
     return '' +
       '<div class="confirm-wrap">' +
-        '<div class="success-ring">✓</div>' +
+        '<div class="success-ring">' + T.icon('check') + '</div>' +
         '<h1>Booking confirmed!</h1>' +
-        '<p class="muted">Your flights are booked. Pack your bags ✈</p>' +
+        '<p class="muted">Your flights are booked. Pack your bags.</p>' +
         '<div class="confirm-card">' +
           '<div class="row"><span>Reference</span><span class="reference">' + booking.ref + '</span></div>' +
           '<div class="row"><span>Booked on</span><span>' + T.formatDate(booking.created.slice(0, 10)) + '</span></div>' +
@@ -41,7 +41,7 @@
           (booking.discount ? '<div class="row"><span>Discount</span><span class="green num-tabular">−' + T.money(booking.discount) + '</span></div>' : '') +
           '<div class="row" style="border-top:2px solid var(--line);font-weight:800"><span>Total paid</span><span class="num-tabular">' + T.money(booking.total) + '</span></div>' +
         '</div>' +
-        '<p class="mt-3"><span class="points-award">✦ +' + booking.pointsEarned + ' loyalty points earned</span></p>' +
+        '<p class="mt-3"><span class="points-award">' + T.icon('star') + ' +' + booking.pointsEarned + ' loyalty points earned</span></p>' +
         '<div class="flex mt-3" style="justify-content:center">' +
           '<a class="btn btn-primary" href="#/profile">View my bookings</a>' +
           '<a class="btn btn-ghost" href="#/">Keep exploring</a>' +

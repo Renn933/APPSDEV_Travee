@@ -18,7 +18,7 @@
 
     var bookingsHtml;
     if (!bookings.length) {
-      bookingsHtml = '<div class="empty"><div class="icon">🗓</div><h3>No bookings yet</h3><p>Your confirmed flights will appear here.</p><a class="btn btn-primary" href="#/">Find a flight</a></div>';
+      bookingsHtml = '<div class="empty"><div class="icon">' + T.icon('calendar') + '</div><h3>No bookings yet</h3><p>Your confirmed flights will appear here.</p><a class="btn btn-primary" href="#/">Find a flight</a></div>';
     } else {
       bookingsHtml = bookings.map(function (b) {
         var cat = 'confirmed';
@@ -32,7 +32,7 @@
               '<div class="flex"><span class="badge-status ' + cat + '">' + label + '</span></div>' +
             '</div>' +
             '<div class="flex spread mt-1">' +
-              '<span class="small muted">Total <span class="num-tabular">' + T.money(b.total) + '</span> · <span class="green">✦ +<span class="num-tabular">' + b.pointsEarned + '</span> pts</span></span>' +
+              '<span class="small muted">Total <span class="num-tabular">' + T.money(b.total) + '</span> · <span class="green">' + T.icon('star') + ' +<span class="num-tabular">' + b.pointsEarned + '</span> pts</span></span>' +
               (b.status === 'confirmed' ? '<button class="btn btn-ghost btn-sm is-danger cancel-booking" data-id="' + b.id + '" type="button">Cancel booking</button>' : '') +
             '</div>' +
           '</div>';
@@ -46,7 +46,7 @@
           '<div style="flex:1">' +
             '<h2 style="margin:0">' + T.esc(user.name) + '</h2>' +
             '<div class="muted">@' + T.esc(user.username || '') + ' · ' + T.esc((S.currentRole() || {}).label || 'Traveler') + '</div>' +
-            '<div class="flex mt-1"><span class="points-pill">✦ ' + S.state.points + ' points available</span></div>' +
+            '<div class="flex mt-1"><span class="points-pill">' + T.icon('star') + ' ' + S.state.points + ' points available</span></div>' +
           '</div>' +
           '<button class="btn btn-ghost" id="profile-logout" type="button">Sign out</button>' +
         '</div>' +
@@ -55,7 +55,7 @@
           '<div class="flex spread"><strong style="letter-spacing:.5px">TRAVEE LOYALTY</strong><span class="tier-badge">' + li.tier.name + '</span></div>' +
           '<div class="mt-2" style="margin-top:1rem"><div class="small" style="opacity:.9">Lifetime points: <strong class="num-tabular">' + S.state.lifetime + '</strong></div>' +
             '<div class="loyalty-bar"><div class="loyalty-fill" style="width:' + li.progress + '%"></div></div>' +
-            (li.next ? '<div class="small" style="opacity:.9"><span class="num-tabular">' + (li.next.threshold - S.state.lifetime) + '</span> points to reach ' + li.next.name + '</div>' : '<div class="small" style="opacity:.9">Top tier reached — legend! 🏆</div>') +
+            (li.next ? '<div class="small" style="opacity:.9"><span class="num-tabular">' + (li.next.threshold - S.state.lifetime) + '</span> points to reach ' + li.next.name + '</div>' : '<div class="small" style="opacity:.9">Top tier reached — legend! ' + T.icon('star') + '</div>') +
           '</div>' +
           '<div class="tier-row">' + tiersHtml + '</div>' +
         '</div>' +

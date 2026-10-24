@@ -10,7 +10,7 @@
   function render(params) {
     var id = params && params[0];
     var dest = D.getDestination(id);
-    if (!dest) return '<div class="container"><div class="empty"><div class="icon">🗺</div><h3>Flight not found</h3><p>That route may have moved on.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
+    if (!dest) return '<div class="container"><div class="empty"><div class="icon">' + T.icon('map') + '</div><h3>Flight not found</h3><p>That route may have moved on.</p><a class="btn btn-primary" href="#/">Back to explore</a></div></div>';
 
     var cat = D.getCategory(dest.cat);
     var dates = D.upcomingDates(6);
@@ -23,24 +23,24 @@
 
         '<div class="detail-cover">' +
           (dest.photo
-            ? '<img class="cover-img" src="' + T.esc(dest.photo) + '" alt="' + T.esc(dest.name) + '">'
-            : '<div class="grad" style="background:' + cat.gradient + ';position:absolute;inset:0"></div><div class="art">' + dest.art + '</div>') +
+            ? T.photoImage(dest, cat, 'eager', 'cover-img')
+            : '<div class="grad" style="background:' + cat.gradient + ';position:absolute;inset:0"></div><div class="art">' + T.icon(dest.art || cat.icon) + '</div>') +
           '<span class="price-line num-tabular">from ' + T.money(dest.price) + ' one-way</span>' +
           '<div class="ov">' +
             '<h1>' + T.esc(dest.name) + '</h1>' +
-            '<div class="meta"><span>📍 MNL → ' + T.esc(dest.code || '—') + '</span><span class="flight-time">✈ ~' + T.formatDuration(dest.duration) + '</span><span><span class="star">★</span> ' + dest.rating.toFixed(1) + '</span><span>✦ ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
+            '<div class="meta"><span>' + T.icon('pin') + ' MNL → ' + T.esc(dest.code || '—') + '</span><span class="flight-time">' + T.icon('plane') + ' ~' + T.formatDuration(dest.duration) + '</span><span>' + T.icon('star', 'rating-icon') + ' ' + dest.rating.toFixed(1) + '</span><span>' + T.icon('plane') + ' ' + T.esc(dest.airline || dest.bestSeason) + '</span></div>' +
           '</div>' +
         '</div>' +
 
         '<div class="detail-layout">' +
           '<div class="detail-main">' +
-            '<div class="tagline-card mb-2"><span aria-hidden="true">💬</span> ' + T.esc(dest.tagline) + '</div>' +
+            '<div class="tagline-card mb-2">' + T.icon('message') + ' ' + T.esc(dest.tagline) + '</div>' +
             '<h2>About this destination</h2>' +
             '<p>' + T.esc(dest.description || '') + '</p>' +
             (Array.isArray(dest.highlights) && dest.highlights.length
-              ? '<h2>Highlights</h2><ul class="highlights">' + dest.highlights.map(function (h) { return '<li><span class="tick">✓</span>' + T.esc(h) + '</li>'; }).join('') + '</ul>'
+              ? '<h2>Highlights</h2><ul class="highlights">' + dest.highlights.map(function (h) { return '<li><span class="tick">' + T.icon('check') + '</span>' + T.esc(h) + '</li>'; }).join('') + '</ul>'
               : '') +
-            '<div class="tagline-card"><span aria-hidden="true">✈</span> Airline: <strong>' + T.esc(dest.airline || dest.bestSeason || '—') + '</strong> · <span aria-hidden="true">🗓</span> Best season: <strong>' + T.esc(dest.bestSeason || 'Year-round') + '</strong></div>' +
+            '<div class="tagline-card">' + T.icon('plane') + ' Airline: <strong>' + T.esc(dest.airline || dest.bestSeason || '—') + '</strong> · ' + T.icon('calendar') + ' Best season: <strong>' + T.esc(dest.bestSeason || 'Year-round') + '</strong></div>' +
           '</div>' +
 
           '<div class="book-card">' +
@@ -77,8 +77,8 @@
             '<div class="sum-row total"><span>Total</span><span class="num-tabular" id="detail-total">' + T.money(D.packagePrice(dest.price, 1.0)) + '</span></div>' +
             '<p class="small muted num-tabular" id="detail-perperson"></p>' +
             '<button class="btn btn-secondary" style="width:100%" id="add-to-cart-btn" type="button">Add to cart</button>' +
-            '<button class="btn btn-ghost' + (wish ? ' is-saved' : '') + '" style="width:100%;margin-top:.6rem" id="wish-btn" type="button">' +
-              (wish ? '♥ Saved to wishlist' : '♡ Save to wishlist') +
+            '<button class="btn btn-ghost' + (wish ? ' is-saved' : '') + '" style="width:100%;margin-top:.6rem" id="wish-btn" type="button" aria-pressed="' + (wish ? 'true' : 'false') + '">' +
+              T.icon('heart') + (wish ? ' Saved to wishlist' : ' Save to wishlist') +
             '</button>' +
             '<button class="btn btn-go btn-go-lg" style="width:100%;margin-top:.6rem" id="buy-now-btn" type="button">Book now →</button>' +
           '</div>' +
@@ -133,7 +133,8 @@
     T.$('#wish-btn').addEventListener('click', function () {
       var added = S.toggleWishlist(dest.id);
       var wishBtn = T.$('#wish-btn');
-      wishBtn.textContent = added ? '♥ Saved to wishlist' : '♡ Save to wishlist';
+      wishBtn.innerHTML = T.icon('heart') + (added ? ' Saved to wishlist' : ' Save to wishlist');
+      wishBtn.setAttribute('aria-pressed', added ? 'true' : 'false');
       wishBtn.classList.toggle('is-saved', added);
       T.toast(added ? 'Saved to wishlist' : 'Removed from wishlist', added ? 'success' : 'info');
     });
@@ -143,4 +144,3 @@
   window.Views = window.Views || {};
   window.Views.detail = { render: render, mount: mount };
 })();
-

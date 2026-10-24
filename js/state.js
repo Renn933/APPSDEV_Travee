@@ -333,7 +333,7 @@
       duration: Math.max(0, Math.round(Number(data.duration) || 0)),
       pop: Math.max(0, Math.round(Number(data.pop) || 50)),
       airline: String(data.airline || '').trim(),
-      art: String(data.art || '').trim() || '✈',
+      art: String(data.art || '').trim() || 'plane',
       photo: String(data.photo || '').trim(),
       tagline: String(data.tagline || '').trim(),
       description: String(data.description || '').trim(),
@@ -396,4 +396,3 @@
     setFilters: setFilters, resetFilters: resetFilters, filteredDestinations: filteredDestinations
   };
 })();
-

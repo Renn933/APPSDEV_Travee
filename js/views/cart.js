@@ -14,7 +14,7 @@
         '<div class="container">' +
           '<h1 class="screen-title">Your cart</h1>' +
           '<div class="empty">' +
-            '<div class="icon">🧳</div>' +
+            '<div class="icon">' + T.icon('suitcase') + '</div>' +
             '<h3>Your cart is empty</h3>' +
             '<p>Looks like you haven’t picked any flights yet.</p>' +
             '<a class="btn btn-primary" href="#/">Find flights</a>' +
@@ -40,7 +40,7 @@
                 '<button class="btn btn-soft" id="coupon-apply" type="button">Apply</button>' +
               '</div>' +
             '</div>' +
-            '<p class="points-note"><span aria-hidden="true">✦</span> You’ll earn roughly <span class="num-tabular">' + Math.round(info.subtotal / 10) + '</span> points on this order</p>' +
+            '<p class="points-note">' + T.icon('star') + ' You’ll earn roughly <span class="num-tabular">' + Math.round(info.subtotal / 10) + '</span> points on this order</p>' +
             '<button class="btn btn-go btn-go-lg" style="width:100%;margin-top:.8rem" id="checkout-btn" type="button">Checkout →</button>' +
             '<button class="btn btn-ghost btn-sm is-danger" style="width:100%;margin-top:.6rem" id="clear-cart-btn" type="button">Clear cart</button>' +
           '</aside>' +
@@ -51,12 +51,10 @@
   function cartItemHtml(it) {
     var cat = D.getCategory(it.cat);
     var line = it.unit * it.travelers;
-    var thumb = it.photo
-      ? 'background-image:url(\'' + it.photo + '\');background-size:cover;background-position:center'
-      : 'background:' + cat.gradient;
+    var thumb = 'background:' + cat.gradient;
     return '' +
       '<div class="cart-item" data-id="' + it.id + '">' +
-        '<a href="#/destination/' + it.destId + '"><div class="cart-thumb" style="' + thumb + '">' + (it.photo ? '' : it.art) + '</div></a>' +
+        '<a href="#/destination/' + it.destId + '"><div class="cart-thumb" style="' + thumb + '">' + (it.photo ? T.photoImage(it, cat, 'lazy', 'cart-photo') : T.icon(it.art || cat.icon)) + '</div></a>' +
         '<div class="cart-item-info">' +
           '<h4><a href="#/destination/' + it.destId + '">' + T.esc(it.destName) + '</a></h4>' +
           '<div class="sub">' + it.pkgLabel + ' class · Departing ' + T.formatDate(it.date) + '</div>' +

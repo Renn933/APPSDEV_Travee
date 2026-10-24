@@ -15,19 +15,19 @@
           '<p>Domestic and international routes from Manila — compare fares, pick a class and book your seat in minutes.</p>' +
           '<div class="searchbar">' +
             '<input id="search-input" type="text" placeholder="Search cities, countries…" value="' + T.esc(f.search) + '" aria-label="Search flights">' +
-            '<button class="btn btn-ghost btn-sm" id="search-clear" type="button" title="Clear search">✕</button>' +
+            '<button class="btn btn-ghost btn-sm" id="search-clear" type="button" title="Clear search" aria-label="Clear search">' + T.icon('close') + '</button>' +
           '</div>' +
         '</section>' +
 
         '<div class="scope-toggle" id="scope-toggle" role="group" aria-label="Route scope">' +
           '<button type="button" class="scope-btn' + (f.scope === 'all' ? ' active' : '') + '" data-scope="all">All routes</button>' +
-          '<button type="button" class="scope-btn' + (f.scope === 'domestic' ? ' active' : '') + '" data-scope="domestic">🇵🇭 Domestic</button>' +
-          '<button type="button" class="scope-btn' + (f.scope === 'international' ? ' active' : '') + '" data-scope="international">🌏 International</button>' +
+          '<button type="button" class="scope-btn' + (f.scope === 'domestic' ? ' active' : '') + '" data-scope="domestic">' + T.icon('pin') + ' Domestic</button>' +
+          '<button type="button" class="scope-btn' + (f.scope === 'international' ? ' active' : '') + '" data-scope="international">' + T.icon('globe') + ' International</button>' +
         '</div>' +
 
         '<div class="chips" id="cat-chips">' +
           chip('all', 'All') +
-          Object.keys(D.CATEGORIES).map(function (k) { return chip(k, D.CATEGORIES[k].icon + ' ' + D.CATEGORIES[k].label); }).join('') +
+          Object.keys(D.CATEGORIES).map(function (k) { return chip(k, T.icon(D.CATEGORIES[k].icon) + ' ' + T.esc(D.CATEGORIES[k].label)); }).join('') +
         '</div>' +
 
         '<div class="toolbar">' +
@@ -123,7 +123,7 @@
       if (!list.length) {
         grid.innerHTML = '' +
           '<div class="empty" style="grid-column:1/-1">' +
-            '<div class="icon">✈</div>' +
+            '<div class="icon">' + T.icon('plane') + '</div>' +
             '<h3>No flights match your search</h3>' +
             '<p>Try a different city, region or raise the price cap.</p>' +
             '<button class="btn btn-primary" id="reset-filters-btn" type="button">Clear all filters</button>' +
@@ -156,7 +156,7 @@
   function catOptions(selected) {
     return Object.keys(D.CATEGORIES).map(function (k) {
       return '<option value="' + k + '"' + (selected === k ? ' selected' : '') + '>' +
-        D.CATEGORIES[k].icon + ' ' + T.esc(D.CATEGORIES[k].label) + '</option>';
+        T.esc(D.CATEGORIES[k].label) + '</option>';
     }).join('');
   }
 
@@ -183,9 +183,14 @@
   function destForm() {
     var d = editingId ? S.getDestination(editingId) : null;
     var v = d || {};
+    var artOptions = ['city', 'sun', 'island', 'surfboard', 'paw', 'mountain', 'landmark', 'wave', 'motorcycle', 'tower', 'temple', 'skyline'];
+    var artLabels = ['City', 'Beach', 'Island', 'Surf', 'Wildlife', 'Mountain', 'Landmark', 'River', 'Motorcycle', 'Tower', 'Temple', 'Skyline'];
+    var artSelect = artOptions.map(function (art, i) {
+      return '<option value="' + art + '"' + (T.iconKey(v.art || 'city') === art ? ' selected' : '') + '>' + artLabels[i] + '</option>';
+    }).join('');
     var scopeOpts =
-      '<option value="domestic"' + ((v.scope || 'domestic') === 'domestic' ? ' selected' : '') + '>🇵🇭 Domestic</option>' +
-      '<option value="international"' + (v.scope === 'international' ? ' selected' : '') + '>🌏 International</option>';
+      '<option value="domestic"' + ((v.scope || 'domestic') === 'domestic' ? ' selected' : '') + '>Domestic</option>' +
+      '<option value="international"' + (v.scope === 'international' ? ' selected' : '') + '>International</option>';
     return '' +
       '<form id="dest-form" novalidate>' +
         '<div class="dest-form">' +
@@ -200,7 +205,7 @@
           field('df-rating', 'Rating (0–5)', v.rating, { type: 'number', min: 0, step: '0.1', ph: 'e.g. 4.8' }) +
           field('df-pop', 'Popularity (0–100)', v.pop, { type: 'number', min: 0, ph: 'e.g. 90' }) +
           field('df-airline', 'Airlines', v.airline, { ph: 'e.g. PAL · Cebu Pacific' }) +
-          field('df-art', 'Cover emoji', v.art, { ph: 'e.g. 🏙' }) +
+          field('df-art', 'Cover icon', null, { type: 'select', options: artSelect }) +
           field('df-photo', 'Photo path / URL', v.photo, { wide: true, ph: 'images/cebu.jpg (optional)' }) +
           field('df-tagline', 'Tagline', v.tagline, { wide: true, ph: 'One-line hook shown on cards' }) +
           field('df-desc', 'Description', v.description, { wide: true, type: 'textarea', ph: 'Longer copy shown on the detail page.' }) +
@@ -222,13 +227,13 @@
         '<div class="booking-head">' +
           '<div><strong>' + T.esc(d.name) + '</strong>' +
             '<div class="small muted">MNL → ' + T.esc(d.code || '—') + ' · ' + T.esc(d.city) + (d.country ? ', ' + T.esc(d.country) : '') + '</div></div>' +
-          '<span class="role-badge">' + cat.icon + ' ' + T.esc(cat.label) + '</span>' +
+          '<span class="role-badge">' + T.icon(cat.icon) + ' ' + T.esc(cat.label) + '</span>' +
         '</div>' +
         '<div class="dest-meta small muted mt-1">' +
           '<span>' + T.money(d.price) + '</span>' +
-          '<span>✈ ' + T.formatDuration(d.duration) + '</span>' +
-          '<span>★ ' + Number(d.rating || 0).toFixed(1) + '</span>' +
-          '<span>' + (d.scope === 'international' ? '🌏 International' : '🇵🇭 Domestic') + '</span>' +
+          '<span>' + T.icon('plane') + ' ' + T.formatDuration(d.duration) + '</span>' +
+          '<span>' + T.icon('star', 'rating-icon') + ' ' + Number(d.rating || 0).toFixed(1) + '</span>' +
+          '<span>' + T.icon(d.scope === 'international' ? 'globe' : 'pin') + ' ' + (d.scope === 'international' ? 'International' : 'Domestic') + '</span>' +
         '</div>' +
         '<div class="flex spread mt-1">' +
           '<span class="small muted dest-tagline">' + T.esc(d.tagline || '') + '</span>' +
@@ -242,7 +247,7 @@
 
   function renderManager() {
     if (!S.can('manage_destinations')) {
-      return '<div class="container"><div class="empty"><div class="icon">🔒</div><h3>Admins only</h3><p>You don’t have permission to manage destinations.</p><a class="btn btn-primary" href="#/dashboard">Back to board</a></div></div>';
+      return '<div class="container"><div class="empty"><div class="icon">' + T.icon('lock') + '</div><h3>Admins only</h3><p>You don’t have permission to manage destinations.</p><a class="btn btn-primary" href="#/dashboard">Back to board</a></div></div>';
     }
     var dests = S.allDestinations();
     return '' +
@@ -258,7 +263,7 @@
             '<div class="flex spread" style="align-items:center"><h2 class="dash-h" style="margin:0">Routes</h2><span class="small muted">' + dests.length + ' total</span></div>' +
             '<div class="mt-2">' +
               (dests.length ? dests.map(destRow).join('')
-                : '<div class="empty"><div class="icon">🗺</div><h3>No destinations yet</h3><p>Add one using the form.</p></div>') +
+                : '<div class="empty"><div class="icon">' + T.icon('map') + '</div><h3>No destinations yet</h3><p>Add one using the form.</p></div>') +
             '</div>' +
           '</section>' +
         '</div>' +

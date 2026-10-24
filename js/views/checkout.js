@@ -33,14 +33,14 @@
   function render() {
     var items = S.state.cart;
     if (!items.length) {
-      return '<div class="container"><div class="empty"><div class="icon">🧳</div><h3>Nothing to check out</h3><p>Add a flight to your cart first.</p><a class="btn btn-primary" href="#/">Find flights</a></div></div>';
+      return '<div class="container"><div class="empty"><div class="icon">' + T.icon('suitcase') + '</div><h3>Nothing to check out</h3><p>Add a flight to your cart first.</p><a class="btn btn-primary" href="#/">Find flights</a></div></div>';
     }
     return '' +
       '<div class="container">' +
         '<div class="checkout-shell">' +
           '<h1 class="screen-title">Checkout</h1>' +
           '<div class="steps">' +
-            '<div class="step' + (ck.step >= 1 ? ' active' : '') + (ck.step > 1 ? ' done' : '') + '"><span class="dot">' + (ck.step > 1 ? '✓' : '1') + '</span> Traveler details</div>' +
+            '<div class="step' + (ck.step >= 1 ? ' active' : '') + (ck.step > 1 ? ' done' : '') + '"><span class="dot">' + (ck.step > 1 ? T.icon('check') : '1') + '</span> Traveler details</div>' +
             '<div class="step' + (ck.step >= 2 ? ' active' : '') + '"><span class="dot">2</span> Review &amp; confirm</div>' +
           '</div>' +
           '<div id="checkout-body">' + (ck.step === 1 ? step1() : step2()) + '</div>' +
@@ -57,7 +57,7 @@
     return D.COUNTRIES.map(function (c) {
       return '<option value="' + c.iso + '"' + (c.iso === selIso ? ' selected' : '') +
         ' data-dial="' + c.dial + '" data-sample="' + T.esc(c.sample) + '">' +
-        T.esc(c.flag) + ' ' + T.esc(c.name) + ' (' + c.dial + ')</option>';
+        T.esc(c.iso) + ' · ' + T.esc(c.name) + ' (' + c.dial + ')</option>';
     }).join('');
   }
   /* National digits only: drop formatting, a pasted dial-code prefix and leading zeros. */

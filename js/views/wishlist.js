@@ -17,9 +17,9 @@
       return '' +
         '<div class="container">' + header +
           '<div class="empty">' +
-            '<div class="icon">💙</div>' +
+            '<div class="icon">' + T.icon('heart') + '</div>' +
             '<h3>Nothing saved yet</h3>' +
-            '<p>Tap the ♡ on any flight you like and it will wait here.</p>' +
+            '<p>Tap the ' + T.icon('heart') + ' on any flight you like and it will wait here.</p>' +
             '<a class="btn btn-primary" href="#/">Find flights</a>' +
           '</div>' +
         '</div>';
@@ -35,16 +35,16 @@
                 '<div class="dcard-cover">' +
                   '<a class="cover-link" href="#/destination/' + d.id + '">' +
                     (d.photo
-                      ? '<img class="cover-img" src="' + T.esc(d.photo) + '" alt="' + T.esc(d.name) + '" loading="lazy">'
-                      : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + d.art + '</div>') +
-                    '<span class="rating-tag"><span class="star">★</span> ' + d.rating.toFixed(1) + '</span>' +
+                      ? T.photoImage(d, cat, 'lazy', 'cover-img')
+                      : '<div class="grad" style="background:' + cat.gradient + '"></div><div class="art">' + T.icon(d.art || cat.icon) + '</div>') +
+                    '<span class="rating-tag">' + T.icon('star', 'rating-icon') + ' ' + d.rating.toFixed(1) + '</span>' +
                   '</a>' +
-                  '<button class="card-remove" data-id="' + d.id + '" type="button" aria-label="Remove ' + T.esc(d.name) + ' from wishlist" title="Remove from wishlist">✕</button>' +
+                  '<button class="card-remove" data-id="' + d.id + '" type="button" aria-label="Remove ' + T.esc(d.name) + ' from wishlist" title="Remove from wishlist">' + T.icon('close') + '</button>' +
                 '</div>' +
                 '<div class="dcard-body">' +
                   '<h3 class="dcard-title"><a href="#/destination/' + d.id + '">' + T.esc(d.name) + '</a></h3>' +
                   '<div class="dcard-loc">MNL → ' + T.esc(d.code || '—') + ' · ' + T.esc(d.country) + '</div>' +
-                  '<div class="dcard-meta"><span class="flight-time">✈ ~' + T.formatDuration(d.duration) + '</span><span>✦ ' + T.esc(d.airline || d.bestSeason) + '</span></div>' +
+                  '<div class="dcard-meta"><span class="flight-time">' + T.icon('plane') + ' ~' + T.formatDuration(d.duration) + '</span><span>' + T.icon('star') + ' ' + T.esc(d.airline || d.bestSeason) + '</span></div>' +
                   '<div class="dcard-foot">' +
                     '<span class="price-tag num-tabular">from ' + T.money(d.price) + '</span>' +
                     '<a class="btn btn-primary btn-sm" href="#/destination/' + d.id + '">View flight</a>' +

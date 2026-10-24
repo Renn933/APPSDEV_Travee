@@ -11,9 +11,9 @@
   var D = window.TraveeData, T = window.Travee, S = window.TraveeState;
 
   var STATUS = {
-    available: { label: 'Available', icon: '🟢', cls: 'available' },
-    boarding:  { label: 'Boarding',  icon: '🛫', cls: 'boarding' },
-    cancelled: { label: 'Cancelled', icon: '⛔', cls: 'cancelled' }
+    available: { label: 'Available', icon: 'check', cls: 'available' },
+    boarding:  { label: 'Boarding',  icon: 'plane', cls: 'boarding' },
+    cancelled: { label: 'Cancelled', icon: 'close', cls: 'cancelled' }
   };
 
   /* Tally flights by status + a small top-routes roll-up. */
@@ -52,7 +52,7 @@
 
   function statusBadge(b) {
     var s = STATUS[S.flightStatus(b)] || STATUS.cancelled;
-    return '<span class="badge-status ' + s.cls + '">' + s.icon + ' ' + s.label + '</span>';
+    return '<span class="badge-status ' + s.cls + '">' + T.icon(s.icon) + ' ' + s.label + '</span>';
   }
 
   /* Filter state lives on the view object so re-renders keep the choice. */
@@ -65,11 +65,11 @@
     var canManage = S.can('manage_bookings');
 
     var cards = '' +
-      statCard('🗂', 'Total flights', st.total) +
-      statCard('🟢', 'Available', st.available, 'ok') +
-      statCard('🛫', 'Boarding', st.boarding, 'gold') +
-      statCard('⛔', 'Cancelled', st.cancelled, 'bad') +
-      statCard('🧳', 'Seats booked', st.seats);
+      statCard(T.icon('folder'), 'Total flights', st.total) +
+      statCard(T.icon('check'), 'Available', st.available, 'ok') +
+      statCard(T.icon('plane'), 'Boarding', st.boarding, 'gold') +
+      statCard(T.icon('close'), 'Cancelled', st.cancelled, 'bad') +
+      statCard(T.icon('suitcase'), 'Seats booked', st.seats);
 
     /* Filter chips: All / Available / Boarding / Cancelled. */
     var chips = [['all', 'All', st.total]].concat([
@@ -94,7 +94,7 @@
     var shown = S.state.bookings.filter(function (b) { return filter === 'all' || S.flightStatus(b) === filter; });
     var boardHtml;
     if (!shown.length) {
-      boardHtml = '<div class="empty"><div class="icon">🛫</div><h3>No flights here</h3>' +
+      boardHtml = '<div class="empty"><div class="icon">' + T.icon('plane') + '</div><h3>No flights here</h3>' +
         '<p>' + (S.state.bookings.length ? 'No flights match this filter.' : 'Once flights are booked they appear on this board with their live status.') + '</p></div>';
     } else {
       boardHtml = shown.map(function (b) {
@@ -118,7 +118,7 @@
               '<div class="flex">' + statusBadge(b) + '</div>' +
             '</div>' +
             '<div class="flex spread mt-1">' +
-              '<span class="small muted">Total <span class="num-tabular">' + T.money(b.total || 0) + '</span> · <span class="green">✦ +<span class="num-tabular">' + (b.pointsEarned || 0) + '</span> pts</span></span>' +
+              '<span class="small muted">Total <span class="num-tabular">' + T.money(b.total || 0) + '</span> · <span class="green">' + T.icon('star') + ' +<span class="num-tabular">' + (b.pointsEarned || 0) + '</span> pts</span></span>' +
               (actions ? '<div class="flex" style="gap:.4rem">' + actions + '</div>' : '') +
             '</div>' +
           '</div>';
@@ -130,7 +130,7 @@
         '<div class="flex spread" style="align-items:flex-start;gap:1rem;flex-wrap:wrap">' +
           '<div><h1 class="screen-title" style="margin-bottom:.15rem">Flight status board</h1>' +
           '<p class="screen-sub" style="margin-bottom:0">Welcome, ' + T.esc(user.name || 'there') + ' — live situation of every flight.</p></div>' +
-          '<span class="role-badge">' + (role.icon || '🧳') + ' ' + T.esc(role.label || 'Traveler') + (canManage ? '' : ' · read-only') + '</span>' +
+          '<span class="role-badge">' + T.icon(role.icon || 'suitcase') + ' ' + T.esc(role.label || 'Traveler') + (canManage ? '' : ' · read-only') + '</span>' +
         '</div>' +
         '<div class="dash-stats mt-3">' + cards + '</div>' +
         '<div class="chips mt-3" id="status-chips">' + chips + '</div>' +
